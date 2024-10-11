@@ -1,0 +1,6 @@
+errors - hit wall
+graphics - use mlx, place (player, collectable, tile)
+map - 
+lef/right/up/down -  movement, keyboard (wasd, ^<>v)
+validate
+so_long.c
