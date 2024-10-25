@@ -1,0 +1,14 @@
+/* XPM */
+static char * example_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"4 4 2 1",
+/* colors */
+"  c #FFFFFF",  /* white */
+". c #000000",  /* black */
+/* pixels */
+"....",
+".  .",
+".  .",
+"...."
+};
+
