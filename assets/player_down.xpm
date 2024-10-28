@@ -1,0 +1,28 @@
+/* XPM */
+static char *player_down[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 4 1 ",
+"  c #000001",
+". c #F83808",
+"X c #FF7F27",
+"o c #F89850",
+/* pixels */
+"XXXXX      XXXXX",
+"XXXX ...... XXXX",
+"XXX ........ XXX",
+"XXX ...  ... XXX",
+"XX  ..    ..  XX",
+"XX    ....    XX",
+"X o oooooooo o X",
+"X oooo oo oooo X",
+"XX  oo oo oo  XX",
+"XXX  oo..oo  XXX",
+"XX  o.    .o  XX",
+"X oo oo..oo oo X",
+"X oo ..oo.. oo X",
+"XX            XX",
+"XXX ..    .. XXX",
+"XXXX   XX   XXXX"
+};
+
+# c84d40133f224717c0f89dee10327f5087YjAjixUAUz1fBE

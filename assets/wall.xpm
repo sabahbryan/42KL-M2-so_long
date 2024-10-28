@@ -1,0 +1,28 @@
+/* XPM */
+static char *wall[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 4 1 ",
+"  c #393939",
+". c #846B18",
+"X c #AD8C39",
+"o c #D6C68C",
+/* pixels */
+"XXXXX.....XXXXXX",
+"XXX. ooXX. XXX.X",
+"XX ooooXXX. XXXX",
+"X oooooXX... XXX",
+".ooooooXXX. . XX",
+" oooooXX....  XX",
+".oooXX... . . .X",
+"XXXo.. . . . .  ",
+"Xoo.. ... . .   ",
+".oX. . X.. . .  ",
+"..... XXX . . . ",
+" ... XXX . .  ..",
+". . .XX .   X.  ",
+" .   . XX.  .. .",
+". . . XX.. .  .X",
+"X. . .    ..XXXX"
+};
+
+# _25400c8d179419990d4baf1c5ea2fa5MogyJ2k21ysxcvmB

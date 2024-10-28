@@ -1,0 +1,28 @@
+/* XPM */
+static char *exit_close[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 4 1 ",
+"  c gray22",
+". c #A07818",
+"X c #FF7F27",
+"o c #C09038",
+/* pixels */
+"XXXXX.    XXXXXX",
+"XXXX    .o  XXXX",
+"X.  .    ..  .XX",
+"X o   ooo     XX",
+" o. o o..oo  . X",
+" . o.. o...o   .",
+"   o.o   .o. .  ",
+".  o. .......   ",
+"X   ...o ...   .",
+" .. ..o ... .  X",
+" .o. .. ..     .",
+" o ..       o   ",
+"X ...     .o . .",
+"X  .     . ..  X",
+"XX            XX",
+"XXXX.  XX   .XXX"
+};
+
+# _da4f57562a64941ef357925cd06e08cuHTaGiUy4e0aEg0M
