@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/10/11 22:40:26 by bryaloo          ###   ########.fr       */
+/*   Updated: 2024/10/28 21:38:57 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define SO_LONG_H
 
 # include "../libft/libft.h"
-// errno.h, fcntl.h, math.h
+// errno.h, math.h
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 # include <mlx.h>
 
 /*struct
