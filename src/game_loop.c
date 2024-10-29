@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   controls.c                                         :+:      :+:    :+:   */
+/*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 22:29:31 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/10/29 23:06:40 by bryaloo          ###   ########.fr       */
+/*   Created: 2024/10/29 23:04:25 by bryaloo           #+#    #+#             */
+/*   Updated: 2024/10/29 23:04:28 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-//legal moves?
+// Main game loop: move player, update state, and render
+void game_loop(t_game *game) {
+    render_map(game);
+    mlx_loop_hook(game->mlx, &update_game, game);
+}
 
-// controls WASD
-// exit_point
-
-/*
-int key_handler(int keycode, t_vars *vars)
-{
-    if (keycode == KEY_ARROW_RIGHT)
-        vars->player.pos.x += 1;
-    else if (keycode == KEY_ARROW_LEFT)
-        vars->player.pos.x -= 1;
-    else if (keycode == KEY_ARROW_UP)
-        vars->player.pos.y -= 1;
-    else if (keycode == KEY_ARROW_DOWN)
-        vars->player.pos.y += 1;
+// Update the game state based on player actions
+int update_game(t_game *game) {
+    if (game->player_collected == game->total_collectibles
+        && game->player_at_exit) {
+        close_game(game);
+    }
+    render_map(game);
     return (0);
 }
-*/
+
