@@ -1,0 +1,25 @@
+/* XPM */
+static char *exit_open[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 3 1 ",
+"  c #F75231",
+". c #FF9CC6",
+"X c #F7E7D6",
+/* pixels */
+"                ",
+" .XXXXXXXXXXXX. ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" X            X ",
+" .XXXXXXXXXXXX. ",
+"                "
+};

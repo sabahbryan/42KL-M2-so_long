@@ -1,0 +1,28 @@
+/* XPM */
+static char *collectable[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 6 1 ",
+"  c #000001",
+". c #F83808",
+"X c #AD8C39",
+"o c #F89850",
+"@ c #D6C68C",
+"$ c #846B18",
+/* pixels */
+"XX@X@XXXXX@X@XXX",
+"$@X@XX$X$@X@XX$X",
+"@X@XXX    @XXXXX",
+"X@XX  ....  XXXX",
+"XXX ...oo... X$$",
+"XXX ...oo... $XX",
+"XX .......... $X",
+"$X .......... XX",
+"XX oo......oo XX",
+"$@ oooooooooo $X",
+"@X@ oooooooo XXX",
+"X@X oooooooo XXX",
+"XXXX  oooo  $X$$",
+"XXX$XX    X$X$XX",
+"XXXX$X$XXXXX$X$X",
+"$XXXXXXX$XXXXXXX"
+};

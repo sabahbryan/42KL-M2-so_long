@@ -1,0 +1,28 @@
+/* XPM */
+static char *player_up[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 6 1 ",
+"  c #000001",
+". c #F83808",
+"X c #AD8C39",
+"o c #F89850",
+"@ c #D6C68C",
+"$ c #846B18"
+/* pixels */
+"XX@X@      X@XXX",
+"$@X@ ...... XX$X",
+"@X@ ........ XXX",
+"X@X ........ XXX",
+"XX  ........  $$",
+"XX   .oooo.   XX",
+"X o          o X",
+"$ oo        oo X",
+"XX            XX",
+"$@X o.    .o X$X",
+"@X .  oooo  . XX",
+"X o . .... . o X",
+"X o   oooo   o $",
+"XX            XX",
+"XXX ..    .. X$X",
+"$XXX   X$   XXXX"
+};
