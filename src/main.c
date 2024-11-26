@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/10/30 23:04:44 by bryaloo          ###   ########.fr       */
+/*   Updated: 2024/11/19 17:30:43 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,17 @@
 //Function prototypes
 int	init_game(t_game *game, char *map_file);
 
-// Main function to initialize the game and start the game loop
+/**
+ * @brief	Main function to initialise the game and start the game loop
+ * @param	argc	Number of command line arguments
+ * @param	argv	Array of command line arguments (map file path)
+ * @var		game	pointer to the game structure
+ * @return	1) prints error message if argument count is not 2
+ * @return	2) 
+ * @return	3)
+ * @note	1) If the number of arguments is not 2, print usage message
+ * @note	2) calls init_game function to initialise the game
+ */
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -28,7 +38,15 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-// Initialize the game window and load the map
+/**
+ * @brief	Initialise the game window and load the map
+ * @param	game	?
+ * @var		fd	?
+ * @var		map	?
+ * @var		i	?
+ * @return	?
+ * @note	?
+ */
 int	init_game(t_game *game, char *map_file)
 {
 	game->mlx = mlx_init();
@@ -44,3 +62,56 @@ int	init_game(t_game *game, char *map_file)
 	mlx_hook(game->win, 17, 0, close_game, game);
 	return (1);
 }
+
+void	load_player_images(t_game *game)
+{
+    game->player_up_img = mlx_xpm_file_to_image(game->mlx, "player_up.xpm", 
+                                                &width, &height);
+    game->player_down_img = mlx_xpm_file_to_image(game->mlx, "player_down.xpm", 
+                                                  &width, &height);
+    game->player_left_img = mlx_xpm_file_to_image(game->mlx, "player_left.xpm", 
+                                                  &width, &height);
+    game->player_right_img = mlx_xpm_file_to_image(game->mlx, "player_right.xpm", 
+                                                   &width, &height);
+    if (!game->player_up_img || !game->player_down_img || 
+        !game->player_left_img || !game->player_right_img)
+        end_game(game, "Error: Failed to load player images.\n");
+}
+
+/**
+ * @brief	Cleanly close the game and free resources
+ * @param	game	?
+ * @var		fd	?
+ * @var		map	?
+ * @var		i	?
+ * @return	?
+ * @note	?
+ */
+int	close_game(t_game *game, char *message)
+{
+	mlx_destroy_window(game->mlx, game->win);
+	free_map(game->map);
+	if (message)
+		ft_putstr_fd(message, 1);
+	exit(0);
+	return (0);
+}
+/*{
+	// Optional message display
+	if (message)
+		ft_printf("%s", message);
+
+	// Cleanup resources
+	free_map(game->map);
+	if (game->mlx && game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	
+	// Exit the game
+	exit(0);
+}*/
+/*{
+	mlx_destroy_window(game->mlx, game->win);
+	free_map(game->map);
+	exit(0);
+	return (0);
+}*/

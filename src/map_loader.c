@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/10/30 22:58:10 by bryaloo          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:56:49 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,26 @@
 #define MAX_MAP_HEIGHT 100 
 
 // Function prototypes
-char	**load_map(char *filename);
-int		validate_map(char **map);
-int		check_rectangular(char **map);
-int		check_boundary_walls(char **map);
+// char	**load_map(char *filename);
+// int		validate_map(char **map);
+// int		check_rectangular(char **map);
+// int		check_boundary_walls(char **map);
 
-// Load the map from a .ber file
+/**
+ * @brief	Loads the map from a .ber file
+ * @param	filename	 The name of the .ber file to load
+ * @var		fd	file descriptor, to open the file
+ * @var		map	2D array to store the map
+ * @var		i	iterates through each line of the map
+ * @return	1) print error message if the map is invalid
+ * @return	2) print error message if malloc fails
+ * @return	3) returns the map if it is valid, otherwise NULL
+ * @note	1) Attempts to open the map file in read-only mode.
+ * @note	2) Allocates memory for the map array.
+ * @note	3) Reads each line of the map file and stores it in the map array.
+ * @note	4) Closes the file descriptor after reading all lines.
+ * @note	5) Validates the map structure.
+ */
 char	**load_map(char *filename)
 {
 	int		fd;
@@ -48,7 +62,21 @@ char	**load_map(char *filename)
 	return (NULL);
 }
 
-// Validate map structure, boundaries, and required elements
+/**
+ * @brief	Validates map structure, boundaries, and required elements
+ * @param	map	 2D array representing the map
+ * @var		width	Stores the width of the first row
+ * @var		height	Stores the height of the map
+ * @return	1) returns 0 if the map is NULL, not rectangular or invalid walls
+ * @return	2) returns 0 if the map doesn't contain the required elements
+ * @return	3) returns 1 if the map has a valid path between start and exit
+ * @note	1) checks if the map is NULL
+ * @note	2) checks if the map rows are of equal width
+ * @note	3) checks if the map is surrounded by walls (1s)
+ * @note	4) checks width and height
+ * @note	5) checks if the map contains the required items (player, exit..
+ * @note	6) checks if there is a valid path between the player and the exit
+ */
 int	validate_map(char **map)
 {
 	int	width;
@@ -63,7 +91,16 @@ int	validate_map(char **map)
 	return (check_path(map, width, height));
 }
 
-// Check if the map is rectangular
+/**
+ * @brief	Checks if the map is rectangular
+ * @param	map	 2D array representing the map
+ * @var		i	counter to iterate through each row
+ * @var		width	Stores the width of the first row
+ * @return	returns 0 if the rows have different widths
+ * @return	returns 1 if all rows have the same width
+ * @note	1) initialise width to the length of the first row
+ * @note	2) iterates each row and checks if the width is the same
+ */
 int	check_rectangular(char **map)
 {
 	int	i;
@@ -80,7 +117,17 @@ int	check_rectangular(char **map)
 	return (1);
 }
 
-// Ensure the map is surrounded by walls (boundary check)
+/**
+ * @brief	Ensures the map is surrounded by walls (boundary check)
+ * @param	map	 2D array representing the map
+ * @var		i		counter to iterate through each row
+ * @var		width	Stores width of the first row
+ * @var		height	Stores the height of the map
+ * @return	1) returns 0 if any element in the first or last row is not '1'
+ * @return	2) returns 0 if any element in the first or last column is not '1'
+ * @note	1) checks all elements in first and last row are '1'
+ * @note	2) checks all elements in first and last column are '1'
+ */
 int	check_boundary_walls(char **map)
 {
 	int	i;
@@ -105,3 +152,66 @@ int	check_boundary_walls(char **map)
 	}
 	return (1);
 }
+
+/**
+ * @brief	?
+ * @param	map	?
+ * @param	width	?
+ * @param	height	?
+ * @var		x	?
+ * @var		y	?
+ * @var		player	?
+ * @var		exit	?
+ * @var		collectible	?
+ * @return	?
+ * @note	?
+ */
+int	has_required_elements(char **map, int width, int height)
+{
+	int	x;
+	int	y;
+	int	player;
+	int	exit;
+	int	collectible;
+
+	player = 0;
+	exit = 0;
+	collectible = 0;
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			if (map[y][x] == 'P')
+				player++;
+			else if (map[y][x] == 'E')
+				exit++;
+			else if (map[y][x] == 'C')
+				collectible++;
+			x++;
+		}
+		y++;
+	}
+	return (player == 1 && exit >= 1 && collectible >= 1);
+}
+
+#include "so_long.h"
+
+/**
+ * @brief	?
+ * @param	map	?
+ * @var		height	?
+ * @return	?
+ * @note	?
+ */
+int	map_height(char **map)
+{
+	int	height;
+
+	height = 0;
+	while (map[height])
+		height++;
+	return (height);
+}
+// Calculate the height of the map (number of rows)
