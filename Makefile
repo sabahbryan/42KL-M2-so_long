@@ -6,7 +6,7 @@
 #    By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/19 17:04:56 by bryaloo           #+#    #+#              #
-#    Updated: 2024/10/15 21:17:38 by bryaloo          ###   ########.fr        #
+#    Updated: 2024/12/13 22:28:22 by bryaloo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,22 @@
 NAME = so_long
 
 # SOURCE FILES
-SRCS 	=
+SRCS	= main.c \
+		  map_loader.c \
+		  input_handler.c \
+		  game_loop.c \
+		  render.c \
+		  validation.c
 
 # LIBFT
 LIBFT_DIR = libft
 LIBFT	= ${LIBFT_DIR}/libft.a
 
 # OBJECTS
-OBJS	=
+OBJS	=  ${addprefix ./, ${SRCS:.c=.o}}
 
 # INCLUDES
-INCLUDES	= -I ./ -I ${LIBFT_DIR}
+INCLUDES	= -I minilibx_linux -I ./ -I ${LIBFT_DIR}
 
 # COMPILER & FLAGS
 AR		= ar rcs
@@ -33,33 +38,33 @@ GCC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
 
 # MINILIBX
-MLX_MACOS	= -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
-MLX_LINUX	= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+MLXFLAG		= -lmlx -lXext -lX11
+#MLX_MACOS	= -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+MLX_LINUX	= -Lminilibx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -o $(NAME)
 
 # MAKE & BUILD
-all: 
-bonus: 
+all: ${LIBFT} ${NAME}
 
 ${LIBFT}:
 	make -C ${LIBFT_DIR}
 
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) ${MLX_MACOS}
-#	$(CC) $(OBJ) ${MLX_LINUX}
+$(NAME): $(OBJS)
+#	$(CC) $(OBJS) ${MLX_MACOS}
+	$(GCC) $(OBJS) ${MLX_LINUX}
 
-%.o: %.c
+%.o: src/%.c
 	${GCC} ${CFLAGS} ${INCLUDES} -c $< -o $@
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@ # MACOS
-#	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+#	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@ # MACOS
+	$(GCC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 # CLEANING
 clean:
 	${RM} 
-	make -C ${LIBFT_DIR} ${LIBFT} clean
+	make -C ${LIBFT_DIR} clean
 
 fclean:	clean
 	${RM} 
-	make -C ${LIBFT_DIR} ${LIBFT} clean
+	make -C ${LIBFT_DIR} clean
 
 re:	fclean all
 
