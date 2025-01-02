@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/11/11 21:42:38 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/02 21:54:29 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,24 @@ int has_reached_all_elements(char **map)
  * @return	?
  * @note	?
  */
+int check_path(char** map, int start_x, int start_y)
+{
+	char	**map_copy;
+
+	map_copy = copy_map(map, height);
+	if (!map_copy)
+		return (0);
+
+	flood_fill(map_copy, 0, 0);
+	if (!has_reached_all_elements(map_copy))
+	{
+		free_map(map_copy, height);
+		return (0);
+	}
+	free_map(map_copy, height);
+	return (1);
+}
+/*
 int check_path(t_game *game, int start_x, int start_y)
 {
     char    **map_copy;
@@ -128,6 +146,7 @@ int check_path(t_game *game, int start_x, int start_y)
     free_map(map_copy, game->map_height);
     return (1);
 }
+*/
 // Main path-checking function
 // Error handling for memory allocation failure
 // Run flood_fill starting from player's position

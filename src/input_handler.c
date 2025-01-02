@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/11/19 17:33:45 by bryaloo          ###   ########.fr       */
+/*   Updated: 2024/12/11 21:15:55 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	handle_keypress(int keycode, t_game *game)
  * @param	dx	?
  * @param	dy	?
  * @var		dest	stores value of tile at the destination coordinates
+ * @var		new_x	?
+ * @var		new_y	?
+ * @return	?
  * @return	?
  * @note	?
  */
@@ -68,6 +71,8 @@ void	move_player(t_game *game, int dx, int dy)
 		return ;
 	if (dest == 'C')
 		game->collectibles--;
+	if (game->collectibles == 0 && !game->exit_open)
+		game->exit_open = 1;
 	if (dest == 'E' && game->collectibles == 0)
 		close_game(game, "Congratulations! You won!\n");
 	game->map[game->player_y][game->player_x] = '0';

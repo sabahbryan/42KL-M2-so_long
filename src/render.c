@@ -6,19 +6,22 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:38 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/11/19 17:51:09 by bryaloo          ###   ########.fr       */
+/*   Updated: 2024/12/13 21:38:13 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 /**
- * @brief	Renders the entire map
+ * @brief	Renders the entire map by iterating through each tile
  * @param	game	 pointer to the game structure
  * @var		x	column index, x-coordinates
  * @var		y	rows index, y-coordinates
- * @return	?
- * @note	?
+ * @return	none
+ * @note	1) Iterates through each tile in the map starting from top row
+ * @note	2) Continues iterating while row index y < total number of rows
+ * @note	3) Resets the column index x to 0 for each row
+ * 
  */
 void	render_map(t_game *game)
 {
@@ -43,7 +46,7 @@ void	render_map(t_game *game)
  * @param	game	 pointer to the game structure
  * @param	x	column index, x-coordinates
  * @param	y	row index, y-coordinates
- * @var		tile	?
+ * @var		tile	Stores the type of tile at the given position
  * @return	none
  * @note	1) gets the tile type from the map array
  * @note	2) calls the appropriate draw function based on the tile type
@@ -81,17 +84,23 @@ void	draw_collectible(t_game *game, int x, int y)
 }
 
 // Draws the exit tile at the specified position
+// The exit_open flag is used to determine which exit image to draw
 void	draw_exit(t_game *game, int x, int y)
 {
-	mlx_put_image_to_window(game->mlx, game->win,
-		game->exit_img, x * TILE_SIZE, y * TILE_SIZE);
+	if (game->exit_open)
+		mlx_put_image_to_window(game->mlx, game->win,	
+		game->exit_open_img, x * TILE_SIZE, y * TILE_SIZE);
+	else
+		mlx_put_image_to_window(game->mlx, game->win,	
+		game->exit_close_img, x * TILE_SIZE, y * TILE_SIZE);
 }
 
 // Draws the player tile at the specified position
+// The player direction is used to determine which player image to draw
+// Default to the "right" image for rendering
 void	draw_player(t_game *game, int x, int y)
 {
 	void *player_img;
-
 	if (game->player_dir == 0)
 		player_img = game->player_up_img;
 	else if (game->player_dir == 1)

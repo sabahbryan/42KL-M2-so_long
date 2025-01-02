@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/11/13 16:56:49 by bryaloo          ###   ########.fr       */
+/*   Updated: 2024/12/29 14:53:02 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int	validate_map(char **map)
  */
 int	check_rectangular(char **map)
 {
-	int	i;
-	int	width;
+	int		i;
+	size_t	width;
 
 	i = 0;
 	width = ft_strlen(map[0]);
