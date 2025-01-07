@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:25 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/11/08 21:19:51 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:05:35 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	game_loop(t_game *game)
  */
 int	update_game(t_game *game)
 {
-	if (game->player_collected == game->total_collectibles
+	if (game->player_collected == game->collectibles //total collectibles?
 		&& game->player_at_exit)
 	{
-		close_game(game);
+		close_game(game, "EDIT MESSAGE\n");	//win message?
 	}
 	render_map(game);
 	return (0);

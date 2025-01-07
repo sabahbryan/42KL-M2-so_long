@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:38 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/12/13 21:38:13 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:49:31 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,16 @@ void	draw_exit(t_game *game, int x, int y)
 // Default to the "right" image for rendering
 void	draw_player(t_game *game, int x, int y)
 {
-	void *player_img;
+	//void *player_img;
+
 	if (game->player_dir == 0)
-		player_img = game->player_up_img;
+		game->player_img = game->player_up_img;
 	else if (game->player_dir == 1)
-		player_img = game->player_down_img;
+		game->player_img = game->player_down_img;
 	else if (game->player_dir == 2)
-		player_img = game->player_left_img;
+		game->player_img = game->player_left_img;
 	else
-		player_img = game->player_right_img;
+		game->player_img = game->player_right_img;
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->player_img, x * TILE_SIZE, y * TILE_SIZE);
 }

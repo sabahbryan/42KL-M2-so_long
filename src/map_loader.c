@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/12/29 14:53:02 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/05 19:09:14 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	validate_map(char **map)
 	if (!map || !check_rectangular(map) || !check_boundary_walls(map))
 		return (0);
 	width = ft_strlen(map[0]);
-	height = map_height(map);
+	height = calculate_map_height(map);
 	if (!has_required_elements(map, width, height))
 		return (0);
 	return (check_path(map, width, height));
@@ -135,7 +135,7 @@ int	check_boundary_walls(char **map)
 	int	height;
 
 	width = ft_strlen(map[0]);
-	height = map_height(map);
+	height = calculate_map_height(map);
 	i = 0;
 	while (i < width)
 	{
@@ -205,7 +205,7 @@ int	has_required_elements(char **map, int width, int height)
  * @return	?
  * @note	?
  */
-int	map_height(char **map)
+int	calculate_map_height(char **map)
 {
 	int	height;
 
@@ -215,3 +215,29 @@ int	map_height(char **map)
 	return (height);
 }
 // Calculate the height of the map (number of rows)
+
+/*
+int	calculate_map_width(char **map)
+{
+	if (!map || !map[0])
+		return (0);
+	return (ft_strlen(map[0]));
+}
+// Replace ft_strlen with strlen if you're not using libft
+*/
+
+void	free_map(char **map, int height)
+{
+	int	i;
+
+	if (!map)
+		return;
+	i = 0;
+	while (i < height)
+	{
+		if (map[i])
+			free(map[i]);
+		i++;
+	}
+	free(map);
+}

@@ -6,11 +6,13 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/12/11 21:15:55 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/03 16:29:46 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	move_player(t_game *game, int dx, int dy);
 
 /**
  * @brief	Handle keypress events
@@ -36,9 +38,9 @@ int	handle_keypress(int keycode, t_game *game)
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		move_player(game, 1, 0);
 	
-	if (keycode == KEY_W || keycode == KEY_S || 
-        keycode == KEY_A || keycode == KEY_D)
-        move_player(game, game->player_x + dx, game->player_y + dy);
+	//if (keycode == KEY_W || keycode == KEY_S || 
+    //    keycode == KEY_A || keycode == KEY_D)
+    //    move_player(game, game->player_x + dx, game->player_y + dy);
 	return (0);
 }
 //Handle moves

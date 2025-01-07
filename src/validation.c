@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/02 21:54:29 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/05 19:43:34 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ char **copy_map(char **original_map, int height)
  * @return	?
  * @note	?
  */
+void	flood_fill(char **map, int map_width, int map_height, int x, int y)
+{
+	if (x < 0 || x >= map_width || y < 0 || y >= map_height)
+		return ;
+	if (map[y][x] == '1' || map[y][x] == 'F')
+		return ;
+	map[y][x] = 'F';
+	flood_fill(map, map_width, map_height, x + 1, y);
+	flood_fill(map, map_width, map_height, x - 1, y);
+	flood_fill(map, map_width, map_height, x, y + 1);
+	flood_fill(map, map_width, map_height, x, y - 1);
+}
+/*
 void	flood_fill(t_game *game, int x, int y)
 {
 	if (x < 0 || x >= game->map_width || y < 0 || y >= game->map_height)
@@ -66,6 +79,7 @@ void	flood_fill(t_game *game, int x, int y)
 	flood_fill(game, x, y + 1);
 	flood_fill(game, x, y - 1);
 }
+*/
 
 /**
  * @brief	?
@@ -111,7 +125,7 @@ int has_reached_all_elements(char **map)
  * @return	?
  * @note	?
  */
-int check_path(char** map, int start_x, int start_y)
+int check_path(char** map, int width, int height, int start_x, int start_y)
 {
 	char	**map_copy;
 
@@ -119,7 +133,7 @@ int check_path(char** map, int start_x, int start_y)
 	if (!map_copy)
 		return (0);
 
-	flood_fill(map_copy, 0, 0);
+	flood_fill(map_copy, width, height, start_x, start_y);
 	if (!has_reached_all_elements(map_copy))
 	{
 		free_map(map_copy, height);
