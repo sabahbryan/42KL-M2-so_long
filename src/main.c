@@ -6,11 +6,11 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2024/12/16 21:56:11 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:25:57 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 //Function prototypes
 int		init_game(t_game *game, char *map_file);

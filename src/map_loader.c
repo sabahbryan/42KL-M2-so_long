@@ -6,11 +6,11 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/05 19:09:14 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:31:20 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 // Define MAX_MAP_HEIGHT with an appropriate value
 #define MAX_MAP_HEIGHT 100 
@@ -88,7 +88,7 @@ int	validate_map(char **map)
 	height = calculate_map_height(map);
 	if (!has_required_elements(map, width, height))
 		return (0);
-	return (check_path(map, width, height));
+	return (check_path(map, width, height, 0, 0));
 }
 
 /**

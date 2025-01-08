@@ -6,11 +6,11 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/03 16:29:46 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:31:25 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 void	move_player(t_game *game, int dx, int dy);
 

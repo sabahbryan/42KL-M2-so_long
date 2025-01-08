@@ -6,11 +6,11 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/05 19:43:34 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:31:49 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 /**
  * @brief	?

@@ -6,14 +6,14 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/02 21:56:00 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:26:42 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../libft/libft.h"
+# include "./libft/libft.h"
 // errno.h, math.h
 #include <mlx.h>           // MiniLibX library for graphics
 #include <stdlib.h>        // Standard library functions (malloc, free, etc.)
@@ -24,12 +24,19 @@
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 
+// Constants for tile size
+#define TILE_SIZE 64
+
 // Constants for key codes (modify based on your system's codes)
-#define KEY_W 13           // Up
-#define KEY_A 0            // Left
-#define KEY_S 1            // Down
-#define KEY_D 2            // Right
-#define KEY_ESC 53         // ESC key to exit
+#define KEY_W 13		// Up
+#define KEY_A 0			// Left
+#define KEY_S 1			// Down
+#define KEY_D 2			// Right
+#define KEY_ESC 53		// ESC key to exit
+#define KEY_UP 126		// Up
+#define KEY_LEFT 123	// Left
+#define KEY_DOWN 125	// Down
+#define KEY_RIGHT 124	// Right
 
 // Game structure to hold all necessary data
 typedef struct s_game {
@@ -47,6 +54,7 @@ typedef struct s_game {
 	int		player_dir; // 0: up, 1: down, 2: left, 3: right
 	int		img_width;      // Width of the loaded images
 	int		img_height;     // Height of the loaded images
+	void 	*player_img;	// Player image pointer (redundant?)*
 	void	*player_up_img;
 	void	*player_down_img;
 	void	*player_left_img;
@@ -67,7 +75,9 @@ int		validate_map(char **map);
 int		check_rectangular(char **map);
 int		check_boundary_walls(char **map);
 int		has_required_elements(char **map, int width, int height);
-int		map_height(char **map);
+int		calculate_map_height(char **map);
+//int		calculate_map_width(char **map);
+void	free_map(char **map, int height);
 
 // main.c
 int		init_game(t_game *game, char *map_file);
@@ -94,9 +104,9 @@ void	draw_floor(t_game *game, int x, int y);
 
 // validation.c
 char	**copy_map(char **original_map, int height);
-void	flood_fill(t_game *game, int x, int y);
+void	flood_fill(char **map, int map_width, int map_height, int x, int y);
 int		has_reached_all_elements(char **map);
-int		check_path(char** map, int start_x, int start_y);
+int		check_path(char** map, int width, int height, int start_x, int start_y);
 void	*print_error(char *message);
 
 #endif

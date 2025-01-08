@@ -6,11 +6,11 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:38 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/03 17:49:31 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:31:42 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 /**
  * @brief	Renders the entire map by iterating through each tile
