@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/08 18:31:20 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/23 18:26:47 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,12 @@ char	**load_map(char *filename)
 		map[i] = get_next_line(fd);
 		if (!map[i])
 			break ;
+		if (ft_strrchr(map[i], '\n'))
+			map[i][ft_strlen(map[i]) - 1] = '\0';
 		i++;
 	}
 	close(fd);
+	printf("2\n"); //Test
 	if (validate_map(map))
 		return (map);
 	return (NULL);
@@ -81,14 +84,23 @@ int	validate_map(char **map)
 {
 	int	width;
 	int	height;
+	int	player_x;
+	int	player_y;
 
+	printf("3\n"); //Test
 	if (!map || !check_rectangular(map) || !check_boundary_walls(map))
 		return (0);
+	printf("88\n"); //Test
 	width = ft_strlen(map[0]);
 	height = calculate_map_height(map);
+	printf("89\n"); //Test
 	if (!has_required_elements(map, width, height))
 		return (0);
-	return (check_path(map, width, height, 0, 0));
+	printf("90\n"); //Test
+	// Find the player's position dynamically
+	if (!find_player_position(map, &player_x, &player_y))
+		return (0); // Player not found, invalid map
+	return (check_path(map, width, height, player_x, player_y)); //find player
 }
 
 /**
@@ -108,10 +120,12 @@ int	check_rectangular(char **map)
 
 	i = 0;
 	width = ft_strlen(map[0]);
+	printf("4\n"); //Test
 	while (map[i])
 	{
 		if (ft_strlen(map[i]) != width)
 			return (0);
+		printf("5\n"); //Test
 		i++;
 	}
 	return (1);
@@ -134,37 +148,57 @@ int	check_boundary_walls(char **map)
 	int	width;
 	int	height;
 
+	printf("6\n"); //Test
+	// Check if map exists and is valid
+	if (!map || !map[0])
+		return (0);
+
+	printf("7\n"); //Test
 	width = ft_strlen(map[0]);
 	height = calculate_map_height(map);
+
+	// Ensure the map has at least 2 rows and 2 columns
+	if (height < 2 || width < 2)
+		return (0);
+
 	i = 0;
+	printf("8\n"); //Test
 	while (i < width)
 	{
 		if (map[0][i] != '1' || map[height - 1][i] != '1')
 			return (0);
 		i++;
 	}
-	i = 1;
-	while (i < height - 1)
+	printf("9\n"); //Test
+	// i = 1;
+	// while (i < height - 1)
+	i = 0;
+	while (i < height)
 	{
 		if (map[i][0] != '1' || map[i][width - 1] != '1')
 			return (0);
 		i++;
 	}
+	printf("10\n"); //Test
 	return (1);
 }
 
 /**
- * @brief	?
- * @param	map	?
- * @param	width	?
- * @param	height	?
- * @var		x	?
- * @var		y	?
- * @var		player	?
- * @var		exit	?
- * @var		collectible	?
- * @return	?
- * @note	?
+ * @brief	checks if the given map contains 1 of each element 
+ * @param	map	 2D map array
+ * @param	width	number of columns in the map
+ * @param	height	number of rows in the map
+ * @var		x	iterates through each column
+ * @var		y	iterates through each row
+ * @var		player	counts the number of players (should only be 1)
+ * @var		exit	counts the number of exits (should only be 1)
+ * @var		collectible	Counts occurrences of 'C'
+ * @return	if conditions are satisfied, otherwise returns 0
+ * @note	1) initialise all counters to 0 before counting the elements
+ * @note	2) loops through rows of the map (indexed by y)
+ * @note	3) loops through columns of the map (indexed by x)
+ * @note	4) increments counters (P, E, C) if respective element is found
+ * @note	5) returns 1 if conditions are satisfied
  */
 int	has_required_elements(char **map, int width, int height)
 {
@@ -196,19 +230,27 @@ int	has_required_elements(char **map, int width, int height)
 	return (player == 1 && exit >= 1 && collectible >= 1);
 }
 
-#include "so_long.h"
 
 /**
- * @brief	?
- * @param	map	?
- * @var		height	?
- * @return	?
- * @note	?
+ * @brief	Determines the height (number of rows) of the map
+ * @param	map	 2D map array
+ * @var		height	integer variable to store the number of rows counted
+ * @return	1) returns 0 if the map is NULL
+ * @return	2) returns the total number of rows counted
+ * @note	1) checks if the map is NULL (no height), if so, returns 0
+ * @note	2) initialise height to 0 before counting
+ * @note	3) iterates through map array and counts each row (height)
  */
 int	calculate_map_height(char **map)
 {
 	int	height;
 
+	printf("11\n"); //Test
+	// Safeguard against null map
+	if (!map)
+		return (0);
+
+	printf("12\n"); //Test
 	height = 0;
 	while (map[height])
 		height++;
@@ -226,6 +268,16 @@ int	calculate_map_width(char **map)
 // Replace ft_strlen with strlen if you're not using libft
 */
 
+/**
+ * @brief	Frees the allocated memory for the map
+ * @param	map	 2D map array
+ * @param	height	 number of rows in the map
+ * @var		i	counter to iterate through each row
+ * @return	none
+ * @note	1) 
+ * @note	2) 
+ * @note	3) 
+ */
 void	free_map(char **map, int height)
 {
 	int	i;

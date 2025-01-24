@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/08 18:31:49 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:43:15 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,20 @@ int has_reached_all_elements(char **map)
 	int y;
 
     y = 0;
+	printf("16\n"); //Test
     while (map[y])
     {
         x = 0;
         while (map[y][x])
         {
+			//printf("%s\n", map[y]); //Prints the map with 'F' filled
             if (map[y][x] == 'C' || map[y][x] == 'E')
-                return (0);
+				 return (0);
             x++;
         }
         y++;
     }
+	printf("17\n"); //Test
     return (1);
 }
 // Check if all collectibles and the exit were reached by flood_fill
@@ -129,11 +132,14 @@ int check_path(char** map, int width, int height, int start_x, int start_y)
 {
 	char	**map_copy;
 
+	printf("13\n"); //Test
 	map_copy = copy_map(map, height);
 	if (!map_copy)
 		return (0);
 
+	printf("14 %i %i\n", start_x, start_y); //Test
 	flood_fill(map_copy, width, height, start_x, start_y);
+	printf("15\n"); //Test
 	if (!has_reached_all_elements(map_copy))
 	{
 		free_map(map_copy, height);
@@ -169,6 +175,33 @@ int check_path(t_game *game, int start_x, int start_y)
 // Path check failed
 // free the copied map
 // Path is valid
+
+// Function to find the player's position in the map
+int find_player_position(char **map, int *player_x, int *player_y)
+{
+	int x, y;
+
+	printf("21\n"); //Test
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'P')
+			{
+				*player_x = x;
+				*player_y = y;
+				printf("22\n"); //Test
+				return (1); // Player found
+			}
+			x++;
+		}
+		y++;
+	}
+	printf("23\n"); //Test
+	return (0); // Player not found
+}
 
 /**
  * @brief	Displays error messages and exit

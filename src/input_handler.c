@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/08 18:31:25 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/24 19:45:59 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	move_player(t_game *game, int dx, int dy);
  */
 int	handle_keypress(int keycode, t_game *game)
 {
+	printf("Key pressed: %d\n", keycode);
 	if (keycode == KEY_ESC)
 		close_game(game, "Game exited.\n");
 	else if (keycode == KEY_W || keycode == KEY_UP)
@@ -83,6 +84,12 @@ void	move_player(t_game *game, int dx, int dy)
 	game->player_y = new_y;
 	game->moves++;
 	ft_printf("Moves: %d\n", game->moves);
+
+	draw_images(game);
+	// mlx_put_image_to_window(game->mlx, game->win, game->player_img,
+	// 	game->player_x * game->img_width, game->player_y * game->img_height);
+	mlx_put_image_to_window(game->mlx, game->win, game->player_img,
+							new_x * 64, new_y * 64);
 }
 // Moves the player if the destination tile is not a wall
 // Don't move into walls
