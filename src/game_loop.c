@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:25 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/08 18:31:35 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/24 22:11:13 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	game_loop(t_game *game)
 {
 	render_map(game);
 	mlx_loop_hook(game->mlx, &update_game, game);
+	mlx_loop(game->mlx);
 }
 //game->mlx: manages the graphics window
 //&update_game: pointer to the update_game function
@@ -43,7 +44,7 @@ int	update_game(t_game *game)
 {
 	if (game->player_collected == game->collectibles && game->player_at_exit)
 	{
-		close_game(game, "EDIT MESSAGE\n");	
+		close_game(game, "Congratulations! You won!\n");	
 	}
 	render_map(game);
 	return (0);

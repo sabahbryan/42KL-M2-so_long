@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/24 16:43:15 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/24 22:41:28 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,18 +203,17 @@ int find_player_position(char **map, int *player_x, int *player_y)
 	return (0); // Player not found
 }
 
-/**
- * @brief	Displays error messages and exit
- * @param	game	?
- * @var		fd	?
- * @var		map	?
- * @var		i	?
- * @return	?
- * @note	?
- */
-void	*print_error(char *message)
-{
-	ft_putstr_fd(message, 2);
-	return (NULL);
-}
-
+// /**
+//  * @brief	Displays error messages and exit
+//  * @param	game	?
+//  * @var		fd	?
+//  * @var		map	?
+//  * @var		i	?
+//  * @return	?
+//  * @note	?
+//  */
+// void	*print_error(char *message)
+// {
+// 	ft_putstr_fd(message, 2);
+// 	return (NULL);
+// }

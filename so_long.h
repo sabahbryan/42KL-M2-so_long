@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/08 18:26:42 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/30 00:53:13 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,40 @@
 
 # include "./libft/libft.h"
 // errno.h, math.h
-#include <mlx.h>           // MiniLibX library for graphics
+#include "./minilibx_linux/mlx.h"           // MiniLibX library for graphics
 #include <stdlib.h>        // Standard library functions (malloc, free, etc.)
 #include <fcntl.h>         // File control options (open)
 #include <unistd.h>        // UNIX standard functions (write, read, close)
+#include "stdio.h" //just for testing
 
 // Constants for window dimensions
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+#define WIN_WIDTH 1440
+#define WIN_HEIGHT 720
 
 // Constants for tile size
-#define TILE_SIZE 64
+#define TILE_SIZE 32
 
-// Constants for key codes (modify based on your system's codes)
-#define KEY_W 13		// Up
-#define KEY_A 0			// Left
-#define KEY_S 1			// Down
-#define KEY_D 2			// Right
-#define KEY_ESC 53		// ESC key to exit
-#define KEY_UP 126		// Up
-#define KEY_LEFT 123	// Left
-#define KEY_DOWN 125	// Down
-#define KEY_RIGHT 124	// Right
+// Constants for key codes (Linux)
+#define KEY_W 119		// Up
+#define KEY_A 97		// Left
+#define KEY_S 115		// Down
+#define KEY_D 100		// Right
+#define KEY_ESC 65307	// ESC key to exit
+#define KEY_UP 65362	// Up
+#define KEY_LEFT 65361	// Left
+#define KEY_DOWN 65364	// Down
+#define KEY_RIGHT 65363	// Right
+
+// // Constants for key codes (MacOS)
+// #define KEY_W 13		// Up
+// #define KEY_A 0			// Left
+// #define KEY_S 1			// Down
+// #define KEY_D 2			// Right
+// #define KEY_ESC 53		// ESC key to exit
+// #define KEY_UP 126		// Up
+// #define KEY_LEFT 123	// Left
+// #define KEY_DOWN 125	// Down
+// #define KEY_RIGHT 124	// Right
 
 // Game structure to hold all necessary data
 typedef struct s_game {
@@ -79,10 +91,11 @@ int		calculate_map_height(char **map);
 //int		calculate_map_width(char **map);
 void	free_map(char **map, int height);
 
-// main.c
+// so_long.c
 int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
+void	draw_images(t_game *game);
 int		close_game(t_game *game, char *message);
 
 // input_handler.c
@@ -107,7 +120,8 @@ char	**copy_map(char **original_map, int height);
 void	flood_fill(char **map, int map_width, int map_height, int x, int y);
 int		has_reached_all_elements(char **map);
 int		check_path(char** map, int width, int height, int start_x, int start_y);
-void	*print_error(char *message);
+int		find_player_position(char **map, int *player_x, int *player_y);
+//void	*print_error(char *message);
 
 #endif
 

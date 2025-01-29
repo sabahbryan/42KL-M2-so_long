@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/23 18:26:47 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/24 22:40:36 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,19 @@ char	**load_map(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (print_error("Error\nCould not open map file.\n"));
+	{
+		ft_printf("Error\nCould not open map file.\n");
+		return (NULL);
+	}
+		//return (print_error("Error\nCould not open map file.\n"));
 	map = malloc(sizeof(char *) * MAX_MAP_HEIGHT);
 	if (!map)
-		return (print_error("Error\nMemory allocation failed.\n"));
+	{
+		ft_printf("Error\nMemory allocation failed.\n");
+		close(fd);
+		return (NULL);
+	}
+		//return (print_error("Error\nMemory allocation failed.\n"));
 	i = 0;
 	while (i < MAX_MAP_HEIGHT)
 	{

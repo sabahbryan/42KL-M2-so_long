@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/24 18:55:59 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/01/30 00:36:27 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,16 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		print_error("Usage: ./so_long <map_file.ber>\n");
+		ft_printf("Usage: ./so_long <map_file.ber>\n");
 		return (1);
 	}
 	if (!init_game(&game, argv[1]))
 	{
-		print_error("Error: Cannot initialise game\n");
+		ft_printf("Error: Cannot initialise game\n");
 		return (1);
 	}
-	mlx_loop(game.mlx);
+	game_loop(&game);
+	//mlx_loop(game.mlx);
 	return (0);
 }
 
@@ -62,7 +63,7 @@ int	init_game(t_game *game, char *map_file)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 	{
-		print_error("Error\nFailed to initialize MiniLibX.\n");
+		ft_printf("Error\nFailed to initialize MiniLibX.\n");
 		return (0);
 	}
 	printf("1\n"); //Test
@@ -74,7 +75,7 @@ int	init_game(t_game *game, char *map_file)
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "so_long");
 	if (!game->win)
 	{
-		print_error("Error\nFailed to create window.\n");
+		ft_printf("Error\nFailed to create window.\n");
 		return (0);
 	}
 
@@ -131,13 +132,13 @@ void	load_map_images(t_game *game)
 		"assets/exit_open.xpm", &game->img_width, &game->img_height);
 	game->exit_open = 0;
 }
-// Initialize as closed
+// Initialise as closed
 
 void	draw_images(t_game *game)
 {
 	int	x;
 	int	y;
-	int	tile_size = 16; // Assuming each tile is 64x64 pixels
+	int	tile_size = 32; // 32x32 pixels per tile
 	int	screen_x;
 	int	screen_y;
 
@@ -165,6 +166,7 @@ void	draw_images(t_game *game)
 			else if (game->map[y][x] == 'P')
 				mlx_put_image_to_window(game->mlx, game->win, game->player_down_img,
 											screen_x, screen_y);
+			//player_img causes segfault
 			x++;
 		}
 		y++;
