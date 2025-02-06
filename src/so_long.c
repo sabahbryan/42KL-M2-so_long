@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/30 00:36:27 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:11:09 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Usage: ./so_long <map_file.ber>\n");
+		ft_printf("Error, correct format: \"./so_long <map_file.ber>\"\n");
 		return (1);
 	}
 	if (!init_game(&game, argv[1]))
@@ -70,6 +70,7 @@ int	init_game(t_game *game, char *map_file)
 	game->map = load_map(map_file);
 	printf("99\n"); //Test
 	if (!game->map)
+		//ft_printf("Error\nFailed to load map.\n");
 		return (0);
 	printf("100\n"); //Test	
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "so_long");
@@ -78,6 +79,15 @@ int	init_game(t_game *game, char *map_file)
 		ft_printf("Error\nFailed to create window.\n");
 		return (0);
 	}
+
+	// Initialize player position and other game variables
+	game->player_x = 0; // Set initial player x-coordinate
+	game->player_y = 0; // Set initial player y-coordinate
+	game->collectibles = 0;
+	game->player_collected = 0;
+	game->player_at_exit = 0;
+	game->moves = 0;
+	game->player_dir = 0; // Initial direction (up)
 
 	load_map_images(game);
 	load_player_images(game);
@@ -134,6 +144,12 @@ void	load_map_images(t_game *game)
 }
 // Initialise as closed
 
+/**
+ * @brief	?
+ * @param	game	 Pointer to the game structure
+ * @return	none
+ * @note	?
+ */
 void	draw_images(t_game *game)
 {
 	int	x;

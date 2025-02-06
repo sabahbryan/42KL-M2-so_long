@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/24 19:45:59 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/05 19:01:37 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ void	move_player(t_game *game, int dx, int dy)
 	game->map[new_y][new_x] = 'P';
 	game->player_x = new_x;
 	game->player_y = new_y;
-	game->moves++;
+	game->moves++; // initialize it
 	ft_printf("Moves: %d\n", game->moves);
+	//ft_printf("player x %d\n", game->player_x);
 
 	draw_images(game);
 	// mlx_put_image_to_window(game->mlx, game->win, game->player_img,
