@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:38 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/08 18:31:42 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/07 16:16:34 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	render_tile(t_game *game, int x, int y)
 	else
 		draw_floor(game, x, y);
 }
-
 
 // Draws a wall tile at the specified position
 void	draw_wall(t_game *game, int x, int y)

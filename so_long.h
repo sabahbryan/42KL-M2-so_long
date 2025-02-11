@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/01/30 00:53:13 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/07 16:14:58 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int		check_rectangular(char **map);
 int		check_boundary_walls(char **map);
 int		has_required_elements(char **map, int width, int height);
 int		calculate_map_height(char **map);
-//int		calculate_map_width(char **map);
 void	free_map(char **map, int height);
 
 // so_long.c

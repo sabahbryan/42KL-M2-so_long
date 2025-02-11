@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/05 19:01:37 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/11 23:14:00 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,30 @@ int	handle_keypress(int keycode, t_game *game)
 		move_player(game, -1, 0);
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		move_player(game, 1, 0);
-	
-	//if (keycode == KEY_W || keycode == KEY_S || 
-    //    keycode == KEY_A || keycode == KEY_D)
-    //    move_player(game, game->player_x + dx, game->player_y + dy);
 	return (0);
 }
 //Handle moves
 
 /**
  * @brief	Move the player to a new position
- * @param	game	?
- * @param	dx	?
- * @param	dy	?
+ * @param	game	Pointer to the game structure
+ * @param	dx	change in x-coordinate
+ * @param	dy	change in y-coordinate
  * @var		dest	stores value of tile at the destination coordinates
- * @var		new_x	?
- * @var		new_y	?
- * @return	?
- * @return	?
- * @note	?
+ * @var		new_x	player's new x-coordinate
+ * @var		new_y	player's new y-coordinate
+ * @return	1) returns if the new position is out of bounds (hit the wall)
+ * @return	2) returns if player hits the wall
+ * @note	1) computes new player position based on movement
+ * @note	2) ensures player doesn't move outside the map
+ * @note	3) if player hits wall, block movement and return
+ * @note	4) if player collects a collectible, decrement collectibles
+ * @note	5) if all collectibles are collected, open the exit
+ * @note	6) if player reaches exit with all collectibles, end the game
+ * @note	7) updates player position: old position to 0, new position to P
+ * @note	8) increments the movement counter and print in the terminal
+ * @note	9) calls draw_images to "refresh the entire game window"
+ * @note	9) mlx_put_image_to_window: to draw the player's new position
  */
 void	move_player(t_game *game, int dx, int dy)
 {
@@ -82,19 +87,32 @@ void	move_player(t_game *game, int dx, int dy)
 	game->map[new_y][new_x] = 'P';
 	game->player_x = new_x;
 	game->player_y = new_y;
-	game->moves++; // initialize it
+	game->moves++; // initialize it?
 	ft_printf("Moves: %d\n", game->moves);
 	//ft_printf("player x %d\n", game->player_x);
 
 	draw_images(game);
-	// mlx_put_image_to_window(game->mlx, game->win, game->player_img,
-	// 	game->player_x * game->img_width, game->player_y * game->img_height);
 	mlx_put_image_to_window(game->mlx, game->win, game->player_img,
 							new_x * 64, new_y * 64);
 }
-// Moves the player if the destination tile is not a wall
-// Don't move into walls
-// Pick up collectible
-// Exit if all collected
-// Update map and player position
-// Increment movement counter
+
+// static void    move_leftside(t_game *game, int player_x, int player_y)
+// {
+//     if (game->map[player_y][player_x - 1] != '1' && game->map[player_y][player_x - 1] != 'E')
+//     {
+//         if (game->map[player_y][player_x - 1] == 'C')
+//             game->collectibles--;
+//         game->map[player_y][player_x - 1] = 'P';
+//         game->map[player_y][player_x] = '0';
+//         game->moves++;
+//         ft_printf("MOVES: %d\n", game->moves);
+//     }
+//     if (game->map[player_y][player_x - 1] == 'E' && game->collectibles == 0)
+//     {
+//         game->moves++;
+//         ft_printf("MOVES: %d\n", game->moves);
+//         ft_printf("You won\n");
+//         mlx_destroy_window(game->mlx, game->win);
+//         exit(0);
+//     }
+// }
