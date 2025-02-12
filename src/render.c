@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:38 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/07 16:16:34 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:26:24 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	render_map(t_game *game)
 	int	x;
 	int	y;
 
+	printf("render_map_1\n"); //Test
 	y = 0;
 	while (y < game->map_height)
 	{
@@ -56,6 +57,7 @@ void	render_tile(t_game *game, int x, int y)
 	char	tile;
 
 	tile = game->map[y][x];
+	printf("render_tile_1\n"); //Test
 	if (tile == '1')
 		draw_wall(game, x, y);
 	else if (tile == 'C')

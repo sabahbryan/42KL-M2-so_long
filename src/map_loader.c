@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/11 22:58:08 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/12 16:25:29 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ int	has_required_elements(char **map, int width, int height)
 	exit = 0;
 	collectible = 0;
 	y = 0;
+	printf("has_required_elements_1\n"); //Test
 	while (y < height)
 	{
 		x = 0;

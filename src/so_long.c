@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/11 22:59:29 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/12 16:09:32 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
+	printf("main_1\n"); //Test
 	if (argc != 2)
 	{
 		ft_printf("Error, correct format: \"./so_long <map_file.ber>\"\n");
@@ -42,6 +43,7 @@ int	main(int argc, char **argv)
 		ft_printf("Error: Cannot initialise game\n");
 		return (1);
 	}
+	printf("main_2\n"); //Test
 	game_loop(&game);
 	//mlx_loop(game.mlx);
 	return (0);
@@ -111,6 +113,7 @@ int	init_game(t_game *game, char *map_file)
  */
 void	load_player_images(t_game *game)
 {
+	printf("load_player_images_1\n"); //Test
 	game->player_up_img = mlx_xpm_file_to_image(game->mlx,
 		"assets/player_up.xpm", &game->img_width, &game->img_height);
 	game->player_down_img = mlx_xpm_file_to_image(game->mlx,
@@ -119,6 +122,7 @@ void	load_player_images(t_game *game)
 		"assets/player_left.xpm", &game->img_width, &game->img_height);
 	game->player_right_img = mlx_xpm_file_to_image(game->mlx,
 		"assets/player_right.xpm", &game->img_width, &game->img_height);
+	printf("load_player_images_2\n"); //Test
 	if (!game->player_up_img || !game->player_down_img || 
 		!game->player_left_img || !game->player_right_img)
 		close_game(game, "Error: Failed to load player images.\n");
@@ -136,6 +140,7 @@ void	load_player_images(t_game *game)
  */
 void	load_map_images(t_game *game)
 {
+	printf("load_map_images_1\n"); //Test
 	game->wall_img = mlx_xpm_file_to_image(game->mlx,
 		"assets/wall.xpm", &game->img_width, &game->img_height);
 	game->collectible_img = mlx_xpm_file_to_image(game->mlx,
@@ -172,6 +177,7 @@ void	draw_images(t_game *game)
 	int	screen_y;
 
 	y = 0;
+	printf("draw_images_1\n"); //Test
 	while (game->map[y] != NULL)
 	{
 		x = 0;
@@ -180,6 +186,7 @@ void	draw_images(t_game *game)
 			screen_x = x * tile_size;
 			screen_y = y * tile_size;
 
+			printf("draw_images_2\n"); //Test
 			if (game->map[y][x] == '1')
 				mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
 											screen_x, screen_y);
@@ -212,6 +219,7 @@ void	draw_images(t_game *game)
  */
 int	close_game(t_game *game, char *message)
 {
+	printf("close_game_1\n"); //Test
 	mlx_destroy_window(game->mlx, game->win);
 	//free_map(game->map);
 	if (message)
