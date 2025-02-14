@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/07 16:14:58 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/14 22:00:44 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ typedef struct s_game {
 	void	*mlx;           // MiniLibX pointer
 	void	*win;           // Window pointer
 	char	**map;          // 2D map array loaded from the .ber file
-	int		map_width;      // Width of the map
-	int		map_height;     // Height of the map
+	// int		map_width;      // Width of the map
+	// int		map_height;     // Height of the map
 	int		player_x;       // Player x-coordinate
 	int		player_y;       // Player y-coordinate
 	int		collectibles; // Total collectibles in the map
@@ -88,7 +88,7 @@ int		check_rectangular(char **map);
 int		check_boundary_walls(char **map);
 int		has_required_elements(char **map, int width, int height);
 int		calculate_map_height(char **map);
-void	free_map(char **map, int height);
+void	free_map(char **map);
 
 // so_long.c
 int		init_game(t_game *game, char *map_file);
@@ -121,6 +121,7 @@ int		has_reached_all_elements(char **map);
 int		check_path(char** map, int width, int height, int start_x, int start_y);
 int		find_player_position(char **map, int *player_x, int *player_y);
 //void	*print_error(char *message);
+int		number_of_collectibles(char **map);
 
 #endif
 
