@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:25 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/12 21:24:05 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/14 21:12:06 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	update_game(t_game *game)
 	//printf("update_game_1\n"); //Test
 	if (game->player_collected == game->collectibles && game->player_at_exit)
 	{
-		close_game(game, "Congratulations! You won!\n");	
+		close_game(game, "YAY!\n");	
 	}
 	render_map(game);
 	return (0);

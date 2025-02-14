@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/12 16:09:32 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/14 21:57:41 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,14 @@ int	init_game(t_game *game, char *map_file)
 	}
 
 	// Initialize player position and other game variables
-	game->player_x = 0;
-	game->player_y = 0;
-	game->collectibles = 0;
+	// game->player_x = 1;
+	// game->player_y = 1;
+	find_player_position(game->map, &game->player_x, &game->player_y);
+	game->collectibles = number_of_collectibles(game->map);
 	game->player_collected = 0;
 	game->player_at_exit = 0;
 	game->moves = 0;
-	game->player_dir = 0; // Initial direction (up)
+	game->player_dir = 1; // Initial direction (down)
 
 	load_map_images(game);
 	load_player_images(game);
@@ -177,7 +178,7 @@ void	draw_images(t_game *game)
 	int	screen_y;
 
 	y = 0;
-	printf("draw_images_1\n"); //Test
+	//printf("draw_images_1\n"); //Test
 	while (game->map[y] != NULL)
 	{
 		x = 0;
@@ -186,7 +187,7 @@ void	draw_images(t_game *game)
 			screen_x = x * tile_size;
 			screen_y = y * tile_size;
 
-			printf("draw_images_2\n"); //Test
+			//printf("draw_images_2\n"); //Test
 			if (game->map[y][x] == '1')
 				mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
 											screen_x, screen_y);
@@ -220,10 +221,21 @@ void	draw_images(t_game *game)
 int	close_game(t_game *game, char *message)
 {
 	printf("close_game_1\n"); //Test
+	mlx_destroy_image(game->mlx, game->player_up_img);
+	mlx_destroy_image(game->mlx, game->player_down_img);
+	mlx_destroy_image(game->mlx, game->player_left_img);
+	mlx_destroy_image(game->mlx, game->player_right_img);
+	mlx_destroy_image(game->mlx, game->wall_img);
+	mlx_destroy_image(game->mlx, game->collectible_img);
+	mlx_destroy_image(game->mlx, game->exit_open_img);
+	mlx_destroy_image(game->mlx, game->exit_close_img);
+	mlx_destroy_image(game->mlx, game->floor_img);
 	mlx_destroy_window(game->mlx, game->win);
-	//free_map(game->map);
+	free_map(game->map);
 	if (message)
 		ft_putstr_fd(message, 1);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 	exit(0);
 	return (0);
 }

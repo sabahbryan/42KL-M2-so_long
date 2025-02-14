@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/11 22:46:01 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/14 22:01:08 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char **copy_map(char **original_map, int height)
     char    **map_copy;
     int     i;
 
+	printf("copy_map_1\n"); //Test
     map_copy = malloc(sizeof(char *) * (height + 1));
     if (!map_copy)
         return (NULL);
@@ -65,6 +66,7 @@ char **copy_map(char **original_map, int height)
  */
 void	flood_fill(char **map, int map_width, int map_height, int x, int y)
 {
+	//printf("flood_fill_1\n"); //Test
 	if (x < 0 || x >= map_width || y < 0 || y >= map_height)
 		return ;
 	if (map[y][x] == '1' || map[y][x] == 'F')
@@ -145,10 +147,10 @@ int check_path(char** map, int width, int height, int start_x, int start_y)
 	printf("check_path_3\n"); //Test
 	if (!has_reached_all_elements(map_copy))
 	{
-		free_map(map_copy, height);
+		free_map(map_copy);
 		return (0);
 	}
-	free_map(map_copy, height);
+	free_map(map_copy);
 	return (1);
 }
 
@@ -191,4 +193,28 @@ int find_player_position(char **map, int *player_x, int *player_y)
 	}
 	printf("find_player_position_3\n"); //Test
 	return (0); // Player not found
+}
+
+int	number_of_collectibles(char **map)
+{
+    int x;
+	int y;
+	int	count;
+
+    y		= 0;
+	count	= 0;
+	printf("number_of_collectibles_1\n"); //Test
+    while (map[y])
+    {
+        x = 0;
+        while (map[y][x])
+        {
+            if (map[y][x] == 'C')
+				count++;
+            x++;
+        }
+        y++;
+    }
+	printf("number_of_collectibles_2\n"); //Test
+    return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:09 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/11 23:14:00 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/14 21:29:02 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	move_player(t_game *game, int dx, int dy);
  */
 int	handle_keypress(int keycode, t_game *game)
 {
-	printf("Key pressed: %d\n", keycode);
+	//printf("Key pressed: %d\n", keycode);
 	if (keycode == KEY_ESC)
 		close_game(game, "Game exited.\n");
 	else if (keycode == KEY_W || keycode == KEY_UP)
@@ -38,6 +38,11 @@ int	handle_keypress(int keycode, t_game *game)
 		move_player(game, -1, 0);
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		move_player(game, 1, 0);
+	// for(size_t i = 0; game->map[i]; i++)
+	// {
+	// 	printf("@@%s\n", game->map[i]);
+	// }
+	printf("Collected:%d\nRemaining:%d\n",game->player_collected,game->collectibles);
 	return (0);
 }
 //Handle moves
@@ -71,9 +76,9 @@ void	move_player(t_game *game, int dx, int dy)
 
 	new_x = game->player_x + dx;
 	new_y = game->player_y + dy;
-	if (new_x < 0 || new_x >= game->map_width || 
-		new_y < 0 || new_y >= game->map_height)
-		return ;
+	// if (new_x < 0 || new_x >= game->map_width || 
+	// 	new_y < 0 || new_y >= game->map_height)
+	// 	return ;
 	dest = game->map[new_y][new_x];
 	if (dest == '1')
 		return ;
@@ -83,6 +88,8 @@ void	move_player(t_game *game, int dx, int dy)
 		game->exit_open = 1;
 	if (dest == 'E' && game->collectibles == 0)
 		close_game(game, "Congratulations! You won!\n");
+	if (dest == 'E' && game->collectibles != 0)
+		return ;
 	game->map[game->player_y][game->player_x] = '0';
 	game->map[new_y][new_x] = 'P';
 	game->player_x = new_x;
@@ -91,9 +98,9 @@ void	move_player(t_game *game, int dx, int dy)
 	ft_printf("Moves: %d\n", game->moves);
 	//ft_printf("player x %d\n", game->player_x);
 
-	draw_images(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->player_img,
-							new_x * 64, new_y * 64);
+	// draw_images(game);
+	// mlx_put_image_to_window(game->mlx, game->win, game->player_img,
+	// 						new_x * 64, new_y * 64);
 }
 
 // static void    move_leftside(t_game *game, int player_x, int player_y)

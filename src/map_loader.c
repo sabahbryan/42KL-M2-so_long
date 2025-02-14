@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/12 16:25:29 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/14 22:00:22 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	**load_map(char *filename)
 	char	**map;
 	int		i;
 
+	printf("load_map_1\n"); //Test
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -66,7 +67,7 @@ char	**load_map(char *filename)
 		i++;
 	}
 	close(fd);
-	printf("load_map_1\n"); //Test
+	printf("load_map_2\n"); //Test
 	if (validate_map(map))
 		return (map);
 	return (NULL);
@@ -272,17 +273,17 @@ int	calculate_map_height(char **map)
  * @note	2) calls free if map is not NULL to deallocate memory
  * @note	3) frees map pointer after all rows are freed
  */
-void	free_map(char **map, int height)
+void	free_map(char **map)
 {
 	int	i;
 
+	printf("free_map_1\n"); //Test
 	if (!map)
 		return;
 	i = 0;
-	while (i < height)
+	while (map[i])
 	{
-		if (map[i])
-			free(map[i]);
+		free(map[i]);
 		i++;
 	}
 	free(map);
