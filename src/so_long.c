@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 18:04:17 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 18:26:39 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,29 +60,21 @@ int	init_game(t_game *game, char *map_file)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-	{
-		ft_printf("Error\nFailed to initialize MiniLibX.\n");
 		return (0);
-	}
 	game->map = load_map(map_file);
 	if (!game->map)
 		return (0);
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "so_long");
 	if (!game->win)
-	{
-		ft_printf("Error\nFailed to create window.\n");
 		return (0);
-	}
 	find_player_position(game->map, &game->player_x, &game->player_y);
 	game->collectibles = number_of_collectibles(game->map);
 	game->player_collected = 0;
 	game->player_at_exit = 0;
 	game->moves = 0;
 	game->player_dir = 1;
-
 	load_map_images(game);
 	load_player_images(game);
-	//draw_images(game);
 	render_map(game);
 	mlx_key_hook(game->win, handle_keypress, game);
 	mlx_hook(game->win, 17, 0, close_game, game);
@@ -137,58 +129,6 @@ void	load_map_images(t_game *game)
 			"assets/exit_open.xpm", &game->img_width, &game->img_height);
 	game->exit_open = 0;
 }
-
-/**
- * @brief	Draws the map by placing images on the window
- * @param	game	 Pointer to the game structure
- * @var		x	 Column index
- * @var		y	 Row index
- * @var		tile_size	 Size of each tile in pixels
- * @var		screen_x	 X-coordinate on the screen
- * @var		screen_y	 Y-coordinate on the screen
- * @return	none
- * @note	1) loops through each row (y) until the end of the map
- * @note	2) loops through each column (x) until the end of the row
- * @note	3) converts map coordinates to screen coordinates based on pixels
- * @note	4) draws image based on the tile type using mlx_put_image_to_window
- */
-// void	draw_images(t_game *game)
-// {
-// 	int	x;
-// 	int	y;
-// 	int	tile_size;
-// 	int	screen_x;
-// 	int	screen_y;
-
-// 	y = 0;
-// 	tile_size = 32;
-// 	while (game->map[y] != NULL)
-// 	{
-// 		x = 0;
-// 		while (game->map[y][x] != '\0')
-// 		{
-// 			screen_x = x * tile_size;
-// 			screen_y = y * tile_size;
-// 			if (game->map[y][x] == '1')
-// 				mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
-// 											screen_x, screen_y);
-// 			else if (game->map[y][x] == 'C')
-// 				mlx_put_image_to_window(game->mlx, game->win, game->collectible_img,
-// 											screen_x, screen_y);
-// 			else if (game->map[y][x] == '0')
-// 				mlx_put_image_to_window(game->mlx, game->win, game->floor_img,
-// 											screen_x, screen_y);
-// 			else if (game->map[y][x] == 'E')
-// 				mlx_put_image_to_window(game->mlx, game->win, game->exit_close_img,
-// 											screen_x, screen_y);
-// 			else if (game->map[y][x] == 'P')
-// 				mlx_put_image_to_window(game->mlx, game->win, game->player_down_img,
-// 											screen_x, screen_y);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
 
 /**
  * @brief	Cleanly close the game and free resources

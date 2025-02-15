@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 16:52:53 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:54:49 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,29 @@
 // Define MAX_MAP_HEIGHT with an appropriate value
 #define MAX_MAP_HEIGHT 100 
 
-// Function prototypes
-// char	**load_map(char *filename);
-// int		validate_map(char **map);
-// int		check_rectangular(char **map);
-// int		check_boundary_walls(char **map);
+/**
+ * @brief	Reads lines from the map file and stores them in the map array
+ * @param	fd	 File descriptor of the map file
+ * @param	map	2D array to store the map
+ * @var		i	 Iterator for the map array
+ * @return	Number of lines read from the file
+ */
+static	int	read_map_lines(int fd, char **map)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_MAP_HEIGHT)
+	{
+		map[i] = get_next_line(fd);
+		if (!map[i])
+			break ;
+		if (ft_strrchr(map[i], '\n'))
+			map[i][ft_strlen(map[i]) - 1] = '\0';
+		i++;
+	}
+	return (i);
+}
 
 /**
  * @brief	Loads the map from a .ber file
@@ -40,31 +58,17 @@ char	**load_map(char *filename)
 {
 	int		fd;
 	char	**map;
-	int		i;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_printf("Error\nCould not open map file.\n");
 		return (NULL);
-	}
 	map = malloc(sizeof(char *) * MAX_MAP_HEIGHT);
 	if (!map)
 	{
-		ft_printf("Error\nMemory allocation failed.\n");
 		close(fd);
 		return (NULL);
 	}
-	i = 0;
-	while (i < MAX_MAP_HEIGHT)
-	{
-		map[i] = get_next_line(fd);
-		if (!map[i])
-			break ;
-		if (ft_strrchr(map[i], '\n'))
-			map[i][ft_strlen(map[i]) - 1] = '\0';
-		i++;
-	}
+	read_map_lines(fd, map);
 	close(fd);
 	if (validate_map(map))
 		return (map);
@@ -72,172 +76,41 @@ char	**load_map(char *filename)
 }
 
 /**
- * @brief	Validates map structure, boundaries, and required elements
- * @param	map	 2D array representing the map
- * @var		width	Stores the width of the first row
- * @var		height	Stores the height of the map
- * @return	1) returns 0 if the map is NULL, not rectangular or invalid walls
- * @return	2) returns 0 if the map doesn't contain the required elements
- * @return	3) returns 1 if the map has a valid path between start and exit
- * @note	1) checks if the map is NULL
- * @note	2) checks if the map rows are of equal width
- * @note	3) checks if the map is surrounded by walls (1s)
- * @note	4) checks width and height
- * @note	5) checks if the map contains the required items (player, exit..
- * @note	6) checks if there is a valid path between the player and the exit
+ * @brief	Duplicates a copy of the original map
+ * @param	original_map	 2D array of the original map
+ * @param	height	 number of rows in the map
+ * @var		map_copy	?
+ * @var		i	?
+ * @return	1) returns NULL if allocation fails
+ * @return	2) returns NULL if copying fails
+ * @return	3) returns the copied map if successful
+ * @note	1) allocates memory for array of strings, plus one for '\0'
+ * @note	2) duplicates each row (string) of original map
+ * @note	2) create new memory block for each row in the map
+ * @note	3) duplication to prevent modifying the original map
+ * @note	4) sets the last element of the array to NULL
  */
-int	validate_map(char **map)
+char	**copy_map(char **original_map, int height)
 {
-	int	width;
-	int	height;
-	int	player_x;
-	int	player_y;
-
-	if (!map || !check_rectangular(map) || !check_boundary_walls(map))
-		return (0);
-	width = ft_strlen(map[0]);
-	height = calculate_map_height(map);
-	if (!has_required_elements(map, width, height))
-		return (0);
-	if (!find_player_position(map, &player_x, &player_y))
-		return (0);
-	return (check_path(map, width, height, player_x, player_y));
-}
-
-/**
- * @brief	Checks if the map is rectangular
- * @param	map	 2D array representing the map
- * @var		i	counter to iterate through each row
- * @var		width	Stores the width of the first row
- * @return	returns 0 if the rows have different widths
- * @return	returns 1 if all rows have the same width
- * @note	1) initialise width to the length of the first row
- * @note	2) iterates each row and checks if the width is the same
- */
-int	check_rectangular(char **map)
-{
+	char	**map_copy;
 	int		i;
-	size_t	width;
 
-	i = 0;
-	width = ft_strlen(map[0]);
-	while (map[i])
-	{
-		if (ft_strlen(map[i]) != width)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-/**
- * @brief	Ensures the map is surrounded by walls (boundary check)
- * @param	map	 2D array representing the map
- * @var		i		counter to iterate through each row
- * @var		width	Stores width of the first row
- * @var		height	Stores the height of the map
- * @return	1) returns 0 if any element in the first or last row is not '1'
- * @return	2) returns 0 if any element in the first or last column is not '1'
- * @note	1) checks all elements in first and last row are '1'
- * @note	2) checks all elements in first and last column are '1'
- */
-int	check_boundary_walls(char **map)
-{
-	int	i;
-	int	width;
-	int	height;
-
-	if (!map || !map[0])
-		return (0);
-	width = ft_strlen(map[0]);
-	height = calculate_map_height(map);
-	if (height < 2 || width < 2)
-		return (0);
-	i = 0;
-	while (i < width)
-	{
-		if (map[0][i] != '1' || map[height - 1][i] != '1')
-			return (0);
-		i++;
-	}
+	map_copy = malloc(sizeof(char *) * (height + 1));
+	if (!map_copy)
+		return (NULL);
 	i = 0;
 	while (i < height)
 	{
-		if (map[i][0] != '1' || map[i][width - 1] != '1')
-			return (0);
+		map_copy[i] = ft_strdup(original_map[i]);
+		if (!map_copy[i])
+			return (NULL);
 		i++;
 	}
-	return (1);
+	map_copy[i] = NULL;
+	return (map_copy);
 }
-
-/**
- * @brief	checks if the given map contains 1 of each element 
- * @param	map	 2D map array
- * @param	width	number of columns in the map
- * @param	height	number of rows in the map
- * @var		x	iterates through each column
- * @var		y	iterates through each row
- * @var		player	counts the number of players (should only be 1)
- * @var		exit	counts the number of exits (should only be 1)
- * @var		collectible	Counts occurrences of 'C'
- * @return	if conditions are satisfied, otherwise returns 0
- * @note	1) initialise all counters to 0 before counting the elements
- * @note	2) loops through rows of the map (indexed by y)
- * @note	3) loops through columns of the map (indexed by x)
- * @note	4) increments counters (P, E, C) if respective element is found
- * @note	5) returns 1 if conditions are satisfied
- */
-int	has_required_elements(char **map, int width, int height)
-{
-	int	x;
-	int	y;
-	int	player;
-	int	exit;
-	int	collectible;
-
-	player = 0;
-	exit = 0;
-	collectible = 0;
-	y = 0;
-	while (y < height)
-	{
-		x = 0;
-		while (x < width)
-		{
-			if (map[y][x] == 'P')
-				player++;
-			else if (map[y][x] == 'E')
-				exit++;
-			else if (map[y][x] == 'C')
-				collectible++;
-			x++;
-		}
-		y++;
-	}
-	return (player == 1 && exit >= 1 && collectible >= 1);
-}
-
-/**
- * @brief	Determines the height (number of rows) of the map
- * @param	map	 2D map array
- * @var		height	integer variable to store the number of rows counted
- * @return	1) returns 0 if the map is NULL
- * @return	2) returns the total number of rows counted
- * @note	1) checks if the map is NULL (no height), if so, returns 0
- * @note	2) initialise height to 0 before counting
- * @note	3) iterates through map array and counts each row (height)
- */
-int	calculate_map_height(char **map)
-{
-	int	height;
-
-	if (!map)
-		return (0);
-	height = 0;
-	while (map[height])
-		height++;
-	return (height);
-}
+// Helper function to copy the map
+// Remember to handle freeing on error in the real code
 
 /**
  * @brief	Frees the allocated memory for the map
@@ -263,3 +136,35 @@ void	free_map(char **map)
 	}
 	free(map);
 }
+
+// ORIGINAL FUNCTION
+// char	**load_map(char *filename)
+// {
+// 	int		fd;
+// 	char	**map;
+// 	int		i;
+
+// 	fd = open(filename, O_RDONLY);
+// 	if (fd < 0)
+// 		return (NULL);
+// 	map = malloc(sizeof(char *) * MAX_MAP_HEIGHT);
+// 	if (!map)
+// 	{
+// 		close(fd);
+// 		return (NULL);
+// 	}
+// 	i = 0;
+// 	while (i < MAX_MAP_HEIGHT)
+// 	{
+// 		map[i] = get_next_line(fd);
+// 		if (!map[i])
+// 			break ;
+// 		if (ft_strrchr(map[i], '\n'))
+// 			map[i][ft_strlen(map[i]) - 1] = '\0';
+// 		i++;
+// 	}
+// 	close(fd);
+// 	if (validate_map(map))
+// 		return (map);
+// 	return (NULL);
+// }

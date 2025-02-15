@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 17:47:31 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 22:58:11 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,19 @@
 
 // Game structure to hold all necessary data
 typedef struct s_game {
-	void	*mlx;           // MiniLibX pointer
-	void	*win;           // Window pointer
-	char	**map;          // 2D map array loaded from the .ber file
-	int		player_x;       // Player x-coordinate
-	int		player_y;       // Player y-coordinate
-	int		collectibles; // Total collectibles in the map
-	int		player_collected;   // Number of collected items by the player
-	int		player_at_exit;     // Flag to check if player reached the exit
+	void	*mlx;				// MiniLibX pointer
+	void	*win;				// Window pointer
+	char	**map;				// 2D map array loaded from the .ber file
+	int		player_x;			// Player x-coordinate
+	int		player_y;			// Player y-coordinate
+	int		collectibles;		// Total collectibles in the map
+	int		player_collected;	// Number of collected items by the player
+	int		player_at_exit;		// Flag to check if player reached the exit
 	int		moves;
-	int		player_dir; // 0: up, 1: down, 2: left, 3: right
-	int		img_width;      // Width of the loaded images
-	int		img_height;     // Height of the loaded images
-	void 	*player_img;	// Player image pointer (redundant?)*
+	int		player_dir; 		// 0: up, 1: down, 2: left, 3: right
+	int		img_width;			// Width of the loaded images
+	int		img_height;			// Height of the loaded images
+	void 	*player_img;		// Player image pointer
 	void	*player_up_img;
 	void	*player_down_img;
 	void	*player_left_img;
@@ -73,26 +73,58 @@ typedef struct s_game {
 	void	*exit_open_img;
 	void	*exit_close_img;
 	void	*floor_img;
-	int		exit_open;	// 0 = closed, 1 = open
+	int		exit_open;			// 0 = closed, 1 = open
 } t_game;
+
+// Map information structure for flood_fill and check_path
+typedef struct s_map_info
+{
+    char **map;
+    int width;
+    int height;
+} t_map_info;
 
 //***FUNCTION PROTOTYPES***
 
-// map_loader.c
-char	**load_map(char *filename);
-int		validate_map(char **map);
-int		check_rectangular(char **map);
-int		check_boundary_walls(char **map);
-int		has_required_elements(char **map, int width, int height);
-int		calculate_map_height(char **map);
-void	free_map(char **map);
-
-// so_long.c
+// so_long.c (MAIN)
 int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
-//void	draw_images(t_game *game);
 int		close_game(t_game *game, char *message);
+
+// map_loader.c
+//static	int	read_map_lines(int fd, char **map);
+char	**load_map(char *filename);
+char	**copy_map(char **original_map, int height);
+void	free_map(char **map);
+
+//map_validation.c
+int		validate_map(char **map);
+int		check_rectangular(char **map);
+int		check_boundary_walls(char **map);
+int		calculate_map_height(char **map);
+
+// element_validation.c
+int		has_reached_all_elements(char **map);
+//static void count_elements(char **map, int width, int height, int *counts);
+int		has_required_elements(char **map, int width, int height);
+int		find_player_position(char **map, int *player_x, int *player_y);
+int		number_of_collectibles(char **map);
+
+// path_validation.c
+void	flood_fill(t_map_info *map_info, int x, int y);
+int		check_path(t_map_info *map_info, int start_x, int start_y);
+
+// render.c
+void	render_map(t_game *game);
+void	render_tile(t_game *game, int x, int y);
+
+// draw_images.c
+void	draw_wall(t_game *game, int x, int y);
+void	draw_collectible(t_game *game, int x, int y);
+void	draw_exit(t_game *game, int x, int y);
+void	draw_player(t_game *game, int x, int y);
+void	draw_floor(t_game *game, int x, int y);
 
 // input_handler.c
 int		handle_keypress(int keycode, t_game *game);
@@ -101,22 +133,5 @@ void	move_player(t_game *game, int dx, int dy);
 // game_loop.c
 void	game_loop(t_game *game);
 int		update_game(t_game *game);
-
-// render.c
-void	render_map(t_game *game);
-void	render_tile(t_game *game, int x, int y);
-void	draw_wall(t_game *game, int x, int y);
-void	draw_collectible(t_game *game, int x, int y);
-void	draw_exit(t_game *game, int x, int y);
-void	draw_player(t_game *game, int x, int y);
-void	draw_floor(t_game *game, int x, int y);
-
-// validation.c
-char	**copy_map(char **original_map, int height);
-void	flood_fill(char **map, int map_width, int map_height, int x, int y);
-int		has_reached_all_elements(char **map);
-int		check_path(char **map, int width, int height, int start_x, int start_y);
-int		find_player_position(char **map, int *player_x, int *player_y);
-int		number_of_collectibles(char **map);
 
 #endif
