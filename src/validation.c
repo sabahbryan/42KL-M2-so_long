@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/14 22:01:08 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 17:47:20 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,24 @@
  * @note	3) duplication to prevent modifying the original map
  * @note	4) sets the last element of the array to NULL
  */
-char **copy_map(char **original_map, int height)
+char	**copy_map(char **original_map, int height)
 {
-    char    **map_copy;
-    int     i;
+	char	**map_copy;
+	int		i;
 
-	printf("copy_map_1\n"); //Test
-    map_copy = malloc(sizeof(char *) * (height + 1));
-    if (!map_copy)
-        return (NULL);
-    i = 0;
-    while (i < height)
-    {
-        map_copy[i] = ft_strdup(original_map[i]);
-        if (!map_copy[i])
-            return (NULL);
-        i++;
-    }
-    map_copy[i] = NULL;
-    return (map_copy);
+	map_copy = malloc(sizeof(char *) * (height + 1));
+	if (!map_copy)
+		return (NULL);
+	i = 0;
+	while (i < height)
+	{
+		map_copy[i] = ft_strdup(original_map[i]);
+		if (!map_copy[i])
+			return (NULL);
+		i++;
+	}
+	map_copy[i] = NULL;
+	return (map_copy);
 }
 // Helper function to copy the map
 // Remember to handle freeing on error in the real code
@@ -66,7 +65,6 @@ char **copy_map(char **original_map, int height)
  */
 void	flood_fill(char **map, int map_width, int map_height, int x, int y)
 {
-	//printf("flood_fill_1\n"); //Test
 	if (x < 0 || x >= map_width || y < 0 || y >= map_height)
 		return ;
 	if (map[y][x] == '1' || map[y][x] == 'F')
@@ -88,33 +86,28 @@ void	flood_fill(char **map, int map_width, int map_height, int x, int y)
  * @note	1) iterates each row until NULL
  * @note	2) iterates each column until '\0'
  * @note	3) checks if there's at least one 'C' or 'E' remaining
+ * @note	4) checks if all elements were reached by flood_fill
  */
-int has_reached_all_elements(char **map)
+int	has_reached_all_elements(char **map)
 {
-    int x;
-	int y;
+	int	x;
+	int	y;
 
-    y = 0;
-	printf("has_reached_all_elements_1\n"); //Test
-    while (map[y])
-    {
-        x = 0;
-        while (map[y][x])
-        {
-			//printf("%s\n", map[y]); //Prints the map with 'F' filled
-            if (map[y][x] == 'C' || map[y][x] == 'E')
-				 return (0);
-            x++;
-        }
-        y++;
-    }
-	printf("has_reached_all_elements_2\n"); //Test
-    return (1);
+	y = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'C' || map[y][x] == 'E')
+				return (0);
+			x++;
+		}
+		y++;
+	}
+	return (1);
 }
-// Check if all collectibles and the exit were reached by flood_fill
-// C is collectible, E is exit
-// If any collectible or exit is unreached, path is invalid
-// All required elements were reached
+//printf("%s\n", map[y]); //Prints the map with 'F' filled
 
 /**
  * @brief	Verifies valid path from player to collectables and exit
@@ -133,18 +126,14 @@ int has_reached_all_elements(char **map)
  * @note	4) frees the copied map if any elements remains
  * @note	5) frees the copied map to prevent memory leaks
  */
-int check_path(char** map, int width, int height, int start_x, int start_y)
+int	check_path(char **map, int width, int height, int start_x, int start_y)
 {
 	char	**map_copy;
 
-	printf("check_path_1\n"); //Test
 	map_copy = copy_map(map, height);
 	if (!map_copy)
 		return (0);
-
-	printf("check_path_2 %i %i\n", start_x, start_y); //Test
 	flood_fill(map_copy, width, height, start_x, start_y);
-	printf("check_path_3\n"); //Test
 	if (!has_reached_all_elements(map_copy))
 	{
 		free_map(map_copy);
@@ -168,12 +157,11 @@ int check_path(char** map, int width, int height, int start_x, int start_y)
  * @note	2) loops through each column (x) until '\0'
  * @note	3) returns if player is found
  */
-int find_player_position(char **map, int *player_x, int *player_y)
+int	find_player_position(char **map, int *player_x, int *player_y)
 {
-	int x;
+	int	x;
 	int	y;
 
-	printf("find_player_position_1\n"); //Test
 	y = 0;
 	while (map[y])
 	{
@@ -184,37 +172,33 @@ int find_player_position(char **map, int *player_x, int *player_y)
 			{
 				*player_x = x;
 				*player_y = y;
-				printf("find_player_position_2\n"); //Test
-				return (1); // Player found
+				return (1);
 			}
 			x++;
 		}
 		y++;
 	}
-	printf("find_player_position_3\n"); //Test
-	return (0); // Player not found
+	return (0);
 }
 
 int	number_of_collectibles(char **map)
 {
-    int x;
-	int y;
+	int	x;
+	int	y;
 	int	count;
 
-    y		= 0;
-	count	= 0;
-	printf("number_of_collectibles_1\n"); //Test
-    while (map[y])
-    {
-        x = 0;
-        while (map[y][x])
-        {
-            if (map[y][x] == 'C')
+	y = 0;
+	count = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'C')
 				count++;
-            x++;
-        }
-        y++;
-    }
-	printf("number_of_collectibles_2\n"); //Test
-    return (count);
+			x++;
+		}
+		y++;
+	}
+	return (count);
 }

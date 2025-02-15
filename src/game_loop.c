@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:25 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/14 21:12:06 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 16:06:26 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,14 @@ int	update_game(t_game *game);
  * @return	none
  * @note	1) Calls render_map to draw the map
  * @note	2) Calls mlx_loop_hook to update the game state
+ * @note	3) &update_game is passed as a parameter to mlx_loop_hook
  */
 void	game_loop(t_game *game)
 {
-	printf("game_loop_1\n"); //Test
 	render_map(game);
 	mlx_loop_hook(game->mlx, &update_game, game);
 	mlx_loop(game->mlx);
 }
-//game->mlx: manages the graphics window
-//&update_game: pointer to the update_game function
-//game:Passed as a parameter to update_game
 
 /**
  * @brief	Update the game state based on player actions
@@ -45,13 +42,10 @@ void	game_loop(t_game *game)
  */
 int	update_game(t_game *game)
 {
-	//printf("update_game_1\n"); //Test
 	if (game->player_collected == game->collectibles && game->player_at_exit)
 	{
-		close_game(game, "YAY!\n");	
+		close_game(game, "YAY!\n");
 	}
 	render_map(game);
 	return (0);
 }
-//total collectibles?
-//win message?

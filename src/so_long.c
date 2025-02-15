@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/14 21:57:41 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 18:04:17 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	printf("main_1\n"); //Test
 	if (argc != 2)
 	{
 		ft_printf("Error, correct format: \"./so_long <map_file.ber>\"\n");
@@ -43,9 +42,7 @@ int	main(int argc, char **argv)
 		ft_printf("Error: Cannot initialise game\n");
 		return (1);
 	}
-	printf("main_2\n"); //Test
 	game_loop(&game);
-	//mlx_loop(game.mlx);
 	return (0);
 }
 
@@ -59,7 +56,6 @@ int	main(int argc, char **argv)
  * @return	4) returns 1 if game initialisation is successful
  * @note	?
  */
-
 int	init_game(t_game *game, char *map_file)
 {
 	game->mlx = mlx_init();
@@ -68,37 +64,27 @@ int	init_game(t_game *game, char *map_file)
 		ft_printf("Error\nFailed to initialize MiniLibX.\n");
 		return (0);
 	}
-	printf("init_game_1\n"); //Test
 	game->map = load_map(map_file);
-	printf("init_game_2\n"); //Test
 	if (!game->map)
-		//ft_printf("Error\nFailed to load map.\n");
 		return (0);
-	printf("init_game_3\n"); //Test	
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "so_long");
 	if (!game->win)
 	{
 		ft_printf("Error\nFailed to create window.\n");
 		return (0);
 	}
-
-	// Initialize player position and other game variables
-	// game->player_x = 1;
-	// game->player_y = 1;
 	find_player_position(game->map, &game->player_x, &game->player_y);
 	game->collectibles = number_of_collectibles(game->map);
 	game->player_collected = 0;
 	game->player_at_exit = 0;
 	game->moves = 0;
-	game->player_dir = 1; // Initial direction (down)
+	game->player_dir = 1;
 
 	load_map_images(game);
 	load_player_images(game);
-	draw_images(game);
-
-	printf("init_game_4\n"); //Test	
+	//draw_images(game);
+	render_map(game);
 	mlx_key_hook(game->win, handle_keypress, game);
-	printf("init_game_5\n"); //Test	
 	mlx_hook(game->win, 17, 0, close_game, game);
 	return (1);
 }
@@ -114,18 +100,16 @@ int	init_game(t_game *game, char *map_file)
  */
 void	load_player_images(t_game *game)
 {
-	printf("load_player_images_1\n"); //Test
 	game->player_up_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/player_up.xpm", &game->img_width, &game->img_height);
+			"assets/player_up.xpm", &game->img_width, &game->img_height);
 	game->player_down_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/player_down.xpm", &game->img_width, &game->img_height);
+			"assets/player_down.xpm", &game->img_width, &game->img_height);
 	game->player_left_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/player_left.xpm", &game->img_width, &game->img_height);
+			"assets/player_left.xpm", &game->img_width, &game->img_height);
 	game->player_right_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/player_right.xpm", &game->img_width, &game->img_height);
-	printf("load_player_images_2\n"); //Test
-	if (!game->player_up_img || !game->player_down_img || 
-		!game->player_left_img || !game->player_right_img)
+			"assets/player_right.xpm", &game->img_width, &game->img_height);
+	if (!game->player_up_img || !game->player_down_img
+		|| !game->player_left_img || !game->player_right_img)
 		close_game(game, "Error: Failed to load player images.\n");
 }
 
@@ -141,17 +125,16 @@ void	load_player_images(t_game *game)
  */
 void	load_map_images(t_game *game)
 {
-	printf("load_map_images_1\n"); //Test
 	game->wall_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/wall.xpm", &game->img_width, &game->img_height);
+			"assets/wall.xpm", &game->img_width, &game->img_height);
 	game->collectible_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/collectable.xpm", &game->img_width, &game->img_height);
+			"assets/collectable.xpm", &game->img_width, &game->img_height);
 	game->floor_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/floor.xpm", &game->img_width, &game->img_height);
+			"assets/floor.xpm", &game->img_width, &game->img_height);
 	game->exit_close_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/exit_close.xpm", &game->img_width, &game->img_height);
+			"assets/exit_close.xpm", &game->img_width, &game->img_height);
 	game->exit_open_img = mlx_xpm_file_to_image(game->mlx,
-		"assets/exit_open.xpm", &game->img_width, &game->img_height);
+			"assets/exit_open.xpm", &game->img_width, &game->img_height);
 	game->exit_open = 0;
 }
 
@@ -169,45 +152,43 @@ void	load_map_images(t_game *game)
  * @note	3) converts map coordinates to screen coordinates based on pixels
  * @note	4) draws image based on the tile type using mlx_put_image_to_window
  */
-void	draw_images(t_game *game)
-{
-	int	x;
-	int	y;
-	int	tile_size = 32; // 32x32 pixels per tile
-	int	screen_x;
-	int	screen_y;
+// void	draw_images(t_game *game)
+// {
+// 	int	x;
+// 	int	y;
+// 	int	tile_size;
+// 	int	screen_x;
+// 	int	screen_y;
 
-	y = 0;
-	//printf("draw_images_1\n"); //Test
-	while (game->map[y] != NULL)
-	{
-		x = 0;
-		while (game->map[y][x] != '\0')
-		{
-			screen_x = x * tile_size;
-			screen_y = y * tile_size;
-
-			//printf("draw_images_2\n"); //Test
-			if (game->map[y][x] == '1')
-				mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
-											screen_x, screen_y);
-			else if (game->map[y][x] == 'C')
-				mlx_put_image_to_window(game->mlx, game->win, game->collectible_img,
-											screen_x, screen_y);
-			else if (game->map[y][x] == '0')
-				mlx_put_image_to_window(game->mlx, game->win, game->floor_img,
-											screen_x, screen_y);
-			else if (game->map[y][x] == 'E')
-				mlx_put_image_to_window(game->mlx, game->win, game->exit_close_img,
-											screen_x, screen_y);
-			else if (game->map[y][x] == 'P')
-				mlx_put_image_to_window(game->mlx, game->win, game->player_down_img,
-											screen_x, screen_y);
-			x++;
-		}
-		y++;
-	}
-}
+// 	y = 0;
+// 	tile_size = 32;
+// 	while (game->map[y] != NULL)
+// 	{
+// 		x = 0;
+// 		while (game->map[y][x] != '\0')
+// 		{
+// 			screen_x = x * tile_size;
+// 			screen_y = y * tile_size;
+// 			if (game->map[y][x] == '1')
+// 				mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
+// 											screen_x, screen_y);
+// 			else if (game->map[y][x] == 'C')
+// 				mlx_put_image_to_window(game->mlx, game->win, game->collectible_img,
+// 											screen_x, screen_y);
+// 			else if (game->map[y][x] == '0')
+// 				mlx_put_image_to_window(game->mlx, game->win, game->floor_img,
+// 											screen_x, screen_y);
+// 			else if (game->map[y][x] == 'E')
+// 				mlx_put_image_to_window(game->mlx, game->win, game->exit_close_img,
+// 											screen_x, screen_y);
+// 			else if (game->map[y][x] == 'P')
+// 				mlx_put_image_to_window(game->mlx, game->win, game->player_down_img,
+// 											screen_x, screen_y);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
 
 /**
  * @brief	Cleanly close the game and free resources
@@ -220,7 +201,6 @@ void	draw_images(t_game *game)
  */
 int	close_game(t_game *game, char *message)
 {
-	printf("close_game_1\n"); //Test
 	mlx_destroy_image(game->mlx, game->player_up_img);
 	mlx_destroy_image(game->mlx, game->player_down_img);
 	mlx_destroy_image(game->mlx, game->player_left_img);

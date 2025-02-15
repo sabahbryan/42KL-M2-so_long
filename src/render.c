@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:04:38 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/14 20:39:55 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 17:38:12 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,18 @@
  * @note	1) Iterates through each tile in the map starting from top row
  * @note	2) Continues iterating while row index y < total number of rows
  * @note	3) Resets the column index x to 0 for each row
- * 
  */
 void	render_map(t_game *game)
 {
 	int	x;
 	int	y;
-	
+
 	y = 0;
-	//printf("render_map_1 %i %i\n", game->map_height, game->map_width); //Test (keeps looping)
 	while (game->map[y] != NULL)
 	{
 		x = 0;
 		while (game->map[y][x] != '\0')
 		{
-			//printf("render_map_2\n"); //Test (keeps looping)
 			render_tile(game, x, y);
 			x++;
 		}
@@ -58,7 +55,6 @@ void	render_tile(t_game *game, int x, int y)
 	char	tile;
 
 	tile = game->map[y][x];
-	//printf("render_tile_1\n"); //Test (infinite loop)
 	if (tile == '1')
 		draw_wall(game, x, y);
 	else if (tile == 'C')
@@ -90,11 +86,11 @@ void	draw_collectible(t_game *game, int x, int y)
 void	draw_exit(t_game *game, int x, int y)
 {
 	if (game->exit_open)
-		mlx_put_image_to_window(game->mlx, game->win,	
-		game->exit_open_img, x * TILE_SIZE, y * TILE_SIZE);
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->exit_open_img, x * TILE_SIZE, y * TILE_SIZE);
 	else
-		mlx_put_image_to_window(game->mlx, game->win,	
-		game->exit_close_img, x * TILE_SIZE, y * TILE_SIZE);
+		mlx_put_image_to_window(game->mlx, game->win,
+			game->exit_close_img, x * TILE_SIZE, y * TILE_SIZE);
 }
 
 // Draws the player tile at the specified position
@@ -102,8 +98,6 @@ void	draw_exit(t_game *game, int x, int y)
 // Default to the "right" image for rendering
 void	draw_player(t_game *game, int x, int y)
 {
-	//void *player_img;
-
 	if (game->player_dir == 0)
 		game->player_img = game->player_up_img;
 	else if (game->player_dir == 1)

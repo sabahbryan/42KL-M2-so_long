@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/14 22:00:44 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 17:47:31 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SO_LONG_H
 
 # include "./libft/libft.h"
-// errno.h, math.h
 #include "./minilibx_linux/mlx.h"           // MiniLibX library for graphics
 #include <stdlib.h>        // Standard library functions (malloc, free, etc.)
 #include <fcntl.h>         // File control options (open)
@@ -55,8 +54,6 @@ typedef struct s_game {
 	void	*mlx;           // MiniLibX pointer
 	void	*win;           // Window pointer
 	char	**map;          // 2D map array loaded from the .ber file
-	// int		map_width;      // Width of the map
-	// int		map_height;     // Height of the map
 	int		player_x;       // Player x-coordinate
 	int		player_y;       // Player y-coordinate
 	int		collectibles; // Total collectibles in the map
@@ -94,7 +91,7 @@ void	free_map(char **map);
 int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
-void	draw_images(t_game *game);
+//void	draw_images(t_game *game);
 int		close_game(t_game *game, char *message);
 
 // input_handler.c
@@ -118,22 +115,8 @@ void	draw_floor(t_game *game, int x, int y);
 char	**copy_map(char **original_map, int height);
 void	flood_fill(char **map, int map_width, int map_height, int x, int y);
 int		has_reached_all_elements(char **map);
-int		check_path(char** map, int width, int height, int start_x, int start_y);
+int		check_path(char **map, int width, int height, int start_x, int start_y);
 int		find_player_position(char **map, int *player_x, int *player_y);
-//void	*print_error(char *message);
 int		number_of_collectibles(char **map);
 
 #endif
-
-/*struct
-	player
-	map height/width
-	wall
-	collectable
-	exit
-	empty_floor
- */
-
-/*
-	src functions here
- */

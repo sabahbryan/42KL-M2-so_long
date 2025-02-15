@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/14 22:00:22 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/15 16:52:53 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	**load_map(char *filename)
 	char	**map;
 	int		i;
 
-	printf("load_map_1\n"); //Test
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
@@ -67,7 +66,6 @@ char	**load_map(char *filename)
 		i++;
 	}
 	close(fd);
-	printf("load_map_2\n"); //Test
 	if (validate_map(map))
 		return (map);
 	return (NULL);
@@ -95,20 +93,15 @@ int	validate_map(char **map)
 	int	player_x;
 	int	player_y;
 
-	printf("validate_map_1\n"); //Test
 	if (!map || !check_rectangular(map) || !check_boundary_walls(map))
 		return (0);
-	printf("validate_map_2\n"); //Test
 	width = ft_strlen(map[0]);
 	height = calculate_map_height(map);
-	printf("validate_map_3\n"); //Test
 	if (!has_required_elements(map, width, height))
 		return (0);
-	printf("validate_map_4\n"); //Test
-	// Find the player's position dynamically
 	if (!find_player_position(map, &player_x, &player_y))
-		return (0); // Player not found, invalid map
-	return (check_path(map, width, height, player_x, player_y)); //find player
+		return (0);
+	return (check_path(map, width, height, player_x, player_y));
 }
 
 /**
@@ -128,12 +121,10 @@ int	check_rectangular(char **map)
 
 	i = 0;
 	width = ft_strlen(map[0]);
-	printf("check_rectangular_1\n"); //Test
 	while (map[i])
 	{
 		if (ft_strlen(map[i]) != width)
 			return (0);
-		printf("check_rectangular_2\n"); //Test
 		i++;
 	}
 	return (1);
@@ -156,28 +147,19 @@ int	check_boundary_walls(char **map)
 	int	width;
 	int	height;
 
-	printf("check_boundary_walls_1\n"); //Test
-	// Check if map exists and is valid
 	if (!map || !map[0])
 		return (0);
-
-	printf("check_boundary_walls_2\n"); //Test
 	width = ft_strlen(map[0]);
 	height = calculate_map_height(map);
-
-	// Ensure the map has at least 2 rows and 2 columns
 	if (height < 2 || width < 2)
 		return (0);
-
 	i = 0;
-	printf("check_boundary_walls_3\n"); //Test
 	while (i < width)
 	{
 		if (map[0][i] != '1' || map[height - 1][i] != '1')
 			return (0);
 		i++;
 	}
-	printf("check_boundary_walls_4\n"); //Test
 	i = 0;
 	while (i < height)
 	{
@@ -185,7 +167,6 @@ int	check_boundary_walls(char **map)
 			return (0);
 		i++;
 	}
-	printf("check_boundary_walls_5\n"); //Test
 	return (1);
 }
 
@@ -218,7 +199,6 @@ int	has_required_elements(char **map, int width, int height)
 	exit = 0;
 	collectible = 0;
 	y = 0;
-	printf("has_required_elements_1\n"); //Test
 	while (y < height)
 	{
 		x = 0;
@@ -251,12 +231,8 @@ int	calculate_map_height(char **map)
 {
 	int	height;
 
-	printf("calculate_map_height_1\n"); //Test
-	// Safeguard against null map
 	if (!map)
 		return (0);
-
-	printf("calculate_map_height_2\n"); //Test
 	height = 0;
 	while (map[height])
 		height++;
@@ -277,9 +253,8 @@ void	free_map(char **map)
 {
 	int	i;
 
-	printf("free_map_1\n"); //Test
 	if (!map)
-		return;
+		return ;
 	i = 0;
 	while (map[i])
 	{
