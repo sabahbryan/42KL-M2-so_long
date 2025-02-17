@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
+/*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:02:19 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 22:48:35 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:07:54 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,27 @@ int	calculate_map_height(char **map)
 	while (map[height])
 		height++;
 	return (height);
+}
+
+/**
+ * @brief	Determines the dimensions of the game window
+ * @param	map	 2D map array
+ * @param	win_width	pointer to store the width of the window
+ * @param	win_height	pointer to store the height of the window
+ * @var		map_width	Stores the width of the map
+ * @var		map_height	Stores the height of the map
+ * @return	none
+ * @note	1) use ft_strlen to calculate the width of the map
+ * @note	2) use calculate_map_height to calculate the height of the map
+ * @note	3) multiply both dimensions by TILE_SIZE to get the window size
+ */
+void	window_dimensions(char **map, int *win_width, int *win_height)
+{
+	int	map_width;
+	int	map_height;
+
+	map_width = ft_strlen(map[0]);
+	map_height = calculate_map_height(map);
+	*win_width = map_width * TILE_SIZE;
+	*win_height = map_height * TILE_SIZE;
 }

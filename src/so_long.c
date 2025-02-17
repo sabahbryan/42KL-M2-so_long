@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
+/*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 18:26:39 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:23:04 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,33 @@ int	main(int argc, char **argv)
  * @brief	Initialise the game window and load the map
  * @param	game	 	 Pointer to the game structure
  * @param	map_file	 Path to the map file
- * @return	1) prints error message if MiniLibX initialisation fails
- * @return	2) returns 0 if map loading fails
- * @return	3) prints error message if window creation fails
+ * @return	1) returns error if MiniLibX initialisation fails
+ * @return	2) returns error if map loading fails
+ * @return	3) returns error if window creation fails
  * @return	4) returns 1 if game initialisation is successful
- * @note	?
+ * @note	1) initialises MiniLibX abd returns pointer to MLX instance
+ * @note	2) loads specified map file and returns 2D array of the map
+ * @note	3) calculates window dimensions based on map size and TILE_SIZE
+ * @note	4) creates a new window with the calculated dimensions
+ * @note	5) finds player's starting position and stores in the game struct
+ * @note	6) calculates the number of collectibles in the map
+ * @note	7) initialises player and exit data
+ * @note	8) loads map and player images, then renders them in the window
+ * @note	9) sets up keypress and close window hooks
  */
 int	init_game(t_game *game, char *map_file)
 {
+	int	win_width;
+	int	win_height;
+
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
 	game->map = load_map(map_file);
 	if (!game->map)
 		return (0);
-	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "so_long");
+	window_dimensions(game->map, &win_width, &win_height);
+	game->win = mlx_new_window(game->mlx, win_width, win_height, "so_long");
 	if (!game->win)
 		return (0);
 	find_player_position(game->map, &game->player_x, &game->player_y);

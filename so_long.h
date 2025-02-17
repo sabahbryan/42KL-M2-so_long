@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
+/*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 22:58:11 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/17 17:17:41 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #include "stdio.h" //just for testing
 
 // Constants for window dimensions
-#define WIN_WIDTH 1440
-#define WIN_HEIGHT 720
+// #define WIN_WIDTH 1440
+// #define WIN_HEIGHT 720
 
 // Constants for tile size
 #define TILE_SIZE 32
@@ -87,6 +87,7 @@ typedef struct s_map_info
 //***FUNCTION PROTOTYPES***
 
 // so_long.c (MAIN)
+void	window_dimensions(char **map, int *win_width, int *win_height);
 int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
@@ -103,6 +104,7 @@ int		validate_map(char **map);
 int		check_rectangular(char **map);
 int		check_boundary_walls(char **map);
 int		calculate_map_height(char **map);
+void	window_dimensions(char **map, int *win_width, int *win_height);
 
 // element_validation.c
 int		has_reached_all_elements(char **map);
