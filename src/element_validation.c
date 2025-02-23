@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element_validation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
+/*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:05:06 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 23:23:10 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:14:48 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	has_reached_all_elements(char **map)
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == 'C' || map[y][x] == 'E')
+			if (map[y][x] == 'C')
 				return (0);
 			x++;
 		}

@@ -3,23 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   path_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
+/*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:19:49 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 23:22:43 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:20:46 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+int	count_collectibles(char **map)
+{
+	int	x;
+	int	y;
+	int	count;
+
+	y = 0;
+	count = 0;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'C')
+				count++;
+			x++;
+		}
+		y++;
+	}
+	return (count);
+}
+
 /**
 * @brief	Flood fill to check map accessibility
 * @param	map_info	pointer to t_map_info struct
 * @param	x	 		current x-coordinate
 * @param	y	 		current y-coordinate
 * @return	1) returns if x or y are out of bounds
-* @return	2) returns if current tile is a wall (1) or visited (F)
+* @return	2) returns if current tile is a wall (1), visited (F) or exit (E)
 * @note	1) checks if x or y are out of bounds
-* @note	2) checks if current tile is a wall (1) or visited (F)
+* @note	2) checks if current tile is a wall (1), visited (F) or exit (E)
 * @note	3) marks the current tile as visited (F)
 * @note	4) recursively expands search to adjacent tiles
 */
@@ -29,12 +52,25 @@ void	flood_fill(t_map_info *map_info, int x, int y)
 		return ;
 	if (map_info->map[y][x] == '1' || map_info->map[y][x] == 'F')
 		return ;
+	if (map_info->map[y][x] == 'C')
+	{
+		map_info->total_c--;
+		map_info->map[y][x] = 'F';
+	}
+	if (map_info->map[y][x] == 'E')
+	{
+		map_info->exit_reachable = 1;
+		return ;
+	}
+	if (map_info->exit_reachable && map_info->total_c == 0)
+		return ;
 	map_info->map[y][x] = 'F';
 	flood_fill(map_info, x + 1, y);
 	flood_fill(map_info, x - 1, y);
 	flood_fill(map_info, x, y + 1);
 	flood_fill(map_info, x, y - 1);
 }
+//need to add exit (E) condition
 
 /**
 * @brief	Verifies valid path from player to collectables and exit
@@ -63,15 +99,23 @@ int	check_path(t_map_info *map_info, int start_x, int start_y)
 	map_copy_info.map = map_copy;
 	map_copy_info.width = map_info->width;
 	map_copy_info.height = map_info->height;
+	map_copy_info.exit_reachable = 0;
+	map_copy_info.total_c = count_collectibles(map_info->map);
 	flood_fill(&map_copy_info, start_x, start_y);
-	if (!has_reached_all_elements(map_copy))
-	{
-		free_map(map_copy);
-		return (0);
-	}
-	free_map(map_copy);
-	return (1);
+	if (map_copy_info.exit_reachable && map_copy_info.total_c == 0)
+		return (1);
+	return (0);
 }
+/* USED TO PRINT MAP IN TERMINAL
+	for(int i = 0; i < map_info->height; i++)
+	{
+		for(int j = 0; j < map_info->width; j++)
+		{
+			printf("%c", map_copy_info.map[i][j]);
+		}
+		printf("\n");
+	}
+*/
 
 // FORMER FUNCTION WITH 5 ARGUMENTS
 // void	flood_fill(char **map, int map_width, int map_height, int x, int y)

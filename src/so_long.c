@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/17 17:23:04 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:27:42 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
  * @return	2) returns error if map loading fails
  * @return	3) returns error if window creation fails
  * @return	4) returns 1 if game initialisation is successful
- * @note	1) initialises MiniLibX abd returns pointer to MLX instance
+ * @note	1) initialises MiniLibX and returns pointer to MLX instance
  * @note	2) loads specified map file and returns 2D array of the map
  * @note	3) calculates window dimensions based on map size and TILE_SIZE
  * @note	4) creates a new window with the calculated dimensions
