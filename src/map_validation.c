@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:02:19 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/21 20:37:10 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/01 19:06:12 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	validate_map(char **map)
 	map_info.width = width;
 	map_info.height = height;
 	return (check_path(&map_info, player_x, player_y));
-	printf("Valid map\n");
+	ft_printf("Valid map\n");
 }
 //return (check_path(map, width, height, player_x, player_y));
 

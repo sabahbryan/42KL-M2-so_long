@@ -6,16 +6,11 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/23 20:27:42 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/01 19:31:12 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
-//Function prototypes
-// int		init_game(t_game *game, char *map_file);
-void	load_player_images(t_game *game);
-int		close_game(t_game *game, char *message);
 
 /**
  * @brief	Main function to initialise the game and start the game loop
@@ -27,6 +22,7 @@ int		close_game(t_game *game, char *message);
  * @return	3) returns 0 if game initialisation is successful
  * @note	1) If the number of arguments is not 2, print usage message
  * @note	2) calls init_game function to initialise the game
+ * @note	3) calls event loop (key inputs, update game state & rendering)
  */
 int	main(int argc, char **argv)
 {

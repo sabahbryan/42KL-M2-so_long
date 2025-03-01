@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/23 18:32:43 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/01 19:08:28 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_map_info
 //***FUNCTION PROTOTYPES***
 
 // so_long.c (MAIN)
-void	window_dimensions(char **map, int *win_width, int *win_height);
 int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
@@ -131,6 +130,7 @@ int		find_player_position(char **map, int *player_x, int *player_y);
 int		number_of_collectibles(char **map);
 
 // path_validation.c
+int		count_collectibles(char **map);
 void	flood_fill(t_map_info *map_info, int x, int y);
 int		check_path(t_map_info *map_info, int start_x, int start_y);
 

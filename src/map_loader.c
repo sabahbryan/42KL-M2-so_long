@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bryaloo <bryaloo@student.42kl.edu.my>      +#+  +:+       +#+        */
+/*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/15 21:54:49 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/01 19:13:31 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static	int	read_map_lines(int fd, char **map)
  * @note	3) Reads each line of the map file and stores it in the map array.
  * @note	4) Closes the file descriptor after reading all lines.
  * @note	5) Validates the map structure.
+ * @note	6) Frees map if validation fails
  */
 char	**load_map(char *filename)
 {
@@ -72,6 +73,7 @@ char	**load_map(char *filename)
 	close(fd);
 	if (validate_map(map))
 		return (map);
+	free_map(map);
 	return (NULL);
 }
 
@@ -88,7 +90,8 @@ char	**load_map(char *filename)
  * @note	2) duplicates each row (string) of original map
  * @note	2) create new memory block for each row in the map
  * @note	3) duplication to prevent modifying the original map
- * @note	4) sets the last element of the array to NULL
+ * @note	4) frees previously malloc-ed rows and columns
+ * @note	5) sets the last element of the array to NULL
  */
 char	**copy_map(char **original_map, int height)
 {
@@ -103,14 +106,17 @@ char	**copy_map(char **original_map, int height)
 	{
 		map_copy[i] = ft_strdup(original_map[i]);
 		if (!map_copy[i])
+		{
+			while (i > 0)
+				free(map_copy[--i]);
+			free(map_copy);
 			return (NULL);
+		}
 		i++;
 	}
 	map_copy[i] = NULL;
 	return (map_copy);
 }
-// Helper function to copy the map
-// Remember to handle freeing on error in the real code
 
 /**
  * @brief	Frees the allocated memory for the map

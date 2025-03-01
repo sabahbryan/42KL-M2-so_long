@@ -6,12 +6,22 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:19:49 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/02/23 20:20:46 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/01 18:57:44 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
+/**
+ * @brief	Counts the number of collectibles on the map
+ * @param	map	 pointer to 2D map array
+ * @var	x		tracks horizontal position (column)
+ * @var	y		tracks vertical position (row)
+ * @var	count	stores number of collectibles found
+ * @return	1) returns total number of collectibles
+ * @note	1) iterates through each row and columns of the map respectively
+ * @note	2) increase the count if a collectible is found
+ */
 int	count_collectibles(char **map)
 {
 	int	x;
@@ -40,11 +50,17 @@ int	count_collectibles(char **map)
 * @param	x	 		current x-coordinate
 * @param	y	 		current y-coordinate
 * @return	1) returns if x or y are out of bounds
-* @return	2) returns if current tile is a wall (1), visited (F) or exit (E)
+* @return	2) returns if current tile is a wall (1) or visited (F)
+* @return	3) stops exploring further in this direction
+* @return	4) returns once all collectibles and exit are found
 * @note	1) checks if x or y are out of bounds
-* @note	2) checks if current tile is a wall (1), visited (F) or exit (E)
+* @note	2) checks if current tile is a wall (1) or visited (F)
 * @note	3) marks the current tile as visited (F)
 * @note	4) recursively expands search to adjacent tiles
+* @note 5) tracks remaining collectibles and marks tile as visited (F)
+* @note 6) marks exit tile as reachable, then stop exploring it further
+* @note 7) stops recursion once all collectibles and exit are found
+* @note 8) recursively calls itself to explore tiles in 4 directions
 */
 void	flood_fill(t_map_info *map_info, int x, int y)
 {
@@ -103,7 +119,11 @@ int	check_path(t_map_info *map_info, int start_x, int start_y)
 	map_copy_info.total_c = count_collectibles(map_info->map);
 	flood_fill(&map_copy_info, start_x, start_y);
 	if (map_copy_info.exit_reachable && map_copy_info.total_c == 0)
+	{
+		free_map(map_copy);
 		return (1);
+	}
+	free_map(map_copy);
 	return (0);
 }
 /* USED TO PRINT MAP IN TERMINAL
