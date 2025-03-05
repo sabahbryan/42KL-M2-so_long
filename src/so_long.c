@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/03/01 19:31:12 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/05 21:43:47 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,13 @@ int	main(int argc, char **argv)
  */
 int	init_game(t_game *game, char *map_file)
 {
-	int	win_width;
-	int	win_height;
-
-	game->mlx = mlx_init();
-	if (!game->mlx)
+	if (!init_mlx(game))
 		return (0);
-	game->map = load_map(map_file);
-	if (!game->map)
+	if (!init_map(game, map_file))
 		return (0);
-	window_dimensions(game->map, &win_width, &win_height);
-	game->win = mlx_new_window(game->mlx, win_width, win_height, "so_long");
-	if (!game->win)
+	if (!init_window(game))
 		return (0);
-	find_player_position(game->map, &game->player_x, &game->player_y);
-	game->collectibles = number_of_collectibles(game->map);
-	game->player_collected = 0;
-	game->player_at_exit = 0;
-	game->moves = 0;
-	game->player_dir = 1;
+	init_game_state(game);
 	load_map_images(game);
 	load_player_images(game);
 	render_map(game);

@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/03/01 19:08:28 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/05 17:45:14 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
 int		close_game(t_game *game, char *message);
+
+//initialise.c
+int		init_mlx(t_game *game);
+int		init_map(t_game *game, char *map_file);
+int		init_window(t_game *game);
+void	init_game_state(t_game *game);
 
 // map_loader.c
 //static	int	read_map_lines(int fd, char **map);
