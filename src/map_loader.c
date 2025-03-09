@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:17 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/03/01 19:13:31 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/07 17:54:52 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ char	**load_map(char *filename)
 {
 	int		fd;
 	char	**map;
+	char	*extension;
+
+	// Check if the file has a .ber extension
+	extension = ft_strrchr(filename, '.');
+	if (!extension || ft_strncmp(extension, ".ber", 4) != 0)
+		return (NULL);
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)

@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:03:55 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/03/05 21:43:47 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/07 17:03:02 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	init_game(t_game *game, char *map_file)
 	load_player_images(game);
 	render_map(game);
 	mlx_key_hook(game->win, handle_keypress, game);
-	mlx_hook(game->win, 17, 0, close_game, game);
+	mlx_hook(game->win, 17, 0, quit_game, game);
 	return (1);
 }
 
@@ -153,5 +153,12 @@ int	close_game(t_game *game, char *message)
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	exit(0);
+	return (0);
+}
+
+//fix SEGFAULT when closing game with 'X' button
+int	quit_game(t_game *game)
+{
+	close_game(game, NULL);
 	return (0);
 }

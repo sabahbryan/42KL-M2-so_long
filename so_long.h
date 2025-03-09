@@ -6,7 +6,7 @@
 /*   By: bryaloo <bryaloo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:32:21 by bryaloo           #+#    #+#             */
-/*   Updated: 2025/03/05 17:45:14 by bryaloo          ###   ########.fr       */
+/*   Updated: 2025/03/07 17:04:17 by bryaloo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int		init_game(t_game *game, char *map_file);
 void	load_player_images(t_game *game);
 void	load_map_images(t_game *game);
 int		close_game(t_game *game, char *message);
+int		quit_game(t_game *game);
+//quit_gamme to fix SEGFAULT
 
 //initialise.c
 int		init_mlx(t_game *game);
